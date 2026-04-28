@@ -1,7 +1,6 @@
 ## アプリケーション名
 
-○○
-1⃣⓵⓶⓷編集必須
+coachtech 勤怠管理アプリ
 
 ## 環境構築
 
@@ -12,8 +11,8 @@
 ```
 コマンドライン上
 
-git clone git@github.com:HIDE52/hide-fremaapp.git
-mv hide-fremaapp coachtechフリマ
+git clone git@github.com:HIDE52/hide-kintaiapp.git
+mv hide-fremaapp kintaiapp
 ```
 
 ⓶ 開発環境を構築します。
@@ -21,14 +20,14 @@ mv hide-fremaapp coachtechフリマ
 ```
 コマンドライン上
 
-cd coachtechフリマ
+cd kintaiapp
 docker-compose up -d --build
 code .
 ```
 
 ※画像処理(GD)等の必要な環境が自動でインストールされます
 
-⓷「Docker Desktop 」の確認を行い、「coachtechフリマ」コンテナが作成されているか確認を行います。
+⓷「Docker Desktop 」の確認を行い、「kintaiapp」コンテナが作成されているか確認を行います。
 
 2⃣ Laravelの初期設定
 
@@ -210,47 +209,8 @@ PHPコンテナ上
 php artisan test tests
 ```
 
-5⃣ Stripe決済のテスト設定
 
-本アプリケーションの決済機能（Stripe）をテスト・動作確認を行うためには、Stripeのテスト用APIキーが必要です。ご自身のStripeアカウントから取得したキーを以下の手順で設定してください。
-
-⓵ Stripeライブラリの確認
-
-通常は `composer install` 実行時に自動でインストールされますが、もし決済機能が動作しない場合は、以下のコマンドを個別に実行してください。
-
-```
-PHPコンテナ上
-
-composer require stripe/stripe-php
-```
-
-⓶ 以下のStripeダッシュボードにログインし,2つのテスト用キーを取得してください。<br/>URL：https://dashboard.stripe.com/test/apikeys
-
-```
-・公開可能キー（pk_test_ から始まる文字列）
-・シークレットキー（sk_test_ から始まる文字列）
-```
-
-⓷ .env ファイル、および .env.testing ファイルの末尾に、取得したキーを追記してください。
-
-```
-.env
-.env.testing
-
-STRIPE_PUBLIC_KEY=ここに公開可能キーを記述
-STRIPE_SECRET_KEY=ここにシークレットキーを記述
-```
-
-⓸ 設定の反映
-設定を反映させるためにキャッシュをクリアしてください。
-
-```
-PHPコンテナ上
-
-php artisan config:clear
-```
-
-6⃣ メール認証機能の設定
+5⃣ メール認証機能の設定
 
 本アプリケーションではセキュリティ向上のため、メール認証を導入しています。開発環境ではメールテスト用サーバー（MailHog）を使用して、実際に届くメールを確認できます。
 
@@ -284,7 +244,6 @@ php artisan config:clear
 ログイン：http://localhost/login<br/>
 phpMyAdmin (DB確認ツール)：http://localhost:8080/<br/>
 メール確認 (Mailhog):http://localhost:8025/<br/>
-Stripeダッシュボード:https://dashboard.stripe.com/test/apikeys<br/>
 MailHogの管理画面（受信トレイ）：http://localhost:8025/
 
 ## ER図
