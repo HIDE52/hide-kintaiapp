@@ -239,9 +239,13 @@ php artisan test tests
 
 ## URL
 
-商品一覧トップ画面：http://localhost/<br/>
-ユーザー登録：http://localhost/register<br/>
-ログイン：http://localhost/login<br/>
+一般ユーザー向け<br/>
+出勤登録トップ画面：http://localhost/attendance<br/>
+会員登録画面：http://localhost/register<br/>
+ログイン画面：http://localhost/login<br/>
+管理者向け<br/>
+勤怠一覧トップ画面：http://localhost/admin/attendance/list<br/>
+ログイン画面：http://localhost/admin/login<br/>
 phpMyAdmin (DB確認ツール)：http://localhost:8080/<br/>
 メール確認 (Mailhog):http://localhost:8025/<br/>
 MailHogの管理画面（受信トレイ）：http://localhost:8025/

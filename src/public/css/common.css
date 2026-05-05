@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+}
+
+.common-header__inner,
+.main__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 92%;
+}
+
+.common-header {
+    background-color: #000000;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.main {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.common-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.common-header__nav-groups {
+    display: flex;
+    flex-direction: column;
+    /* 上下に並べる */
+    align-items: flex-end;
+    /* 右寄せにする */
+    gap: 5px;
+}
+
+.common-header__logo {
+    flex-shrink: 0;
+}
+
+.common-header__logo-img {
+    height: 30px;
+    width: auto;
+    display: block;
+}
+
+.common-header__nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 15px;
+}
+
+.common-header__logout-form {
+    margin: 0;
+    display: inline;
+}
+
+.common-header__nav-link,
+.common-header__nav-button {
+    color: #ffffff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.common-header__nav-link:hover,
+.common-header__nav-button:hover {
+    opacity: 0.8;
+}
+
+.common-header__nav-btn {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 6px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.admin-nav .common-header__nav-link {
+    color: #888;
+    font-size: 0.9em;
+}

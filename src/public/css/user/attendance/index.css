@@ -1,0 +1,79 @@
+.attendance-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background-color: #fff;
+}
+
+.attendance-card {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.attendance__status {
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+.status-label {
+    background-color: #e0e0e0;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.attendance__date {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.attendance__time {
+    font-size: 80px;
+    font-weight: 900;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.attendance__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.btn--black {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 15px 0;
+    border-radius: 4px;
+    font-size: 18px;
+    transition: background-color 0.3s;
+    width: 250px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn--black:hover {
+    background-color: #333;
+}
+
+.attendance__message {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
