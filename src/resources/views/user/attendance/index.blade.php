@@ -1,36 +1,37 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/user/attendance/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/common.demo.css') }}">
 @endsection
 
 @section('content')
-<div class="attendance-container">
-    <div class="attendance-card">
-        <div class="attendance__status">
-            @if(request('status') === 'finished')
-                <span class="status-label">退勤済</span>
-            @endif
+<div class="demo-cockpit">
+    <div class="demo-main">
+    @php
+        $status = request('status', 'A');
+        $imageName = "img/screenshot_" . $status . ".png";
+    @endphp
+    <img src="{{ asset('storage/' . $imageName) }}" alt="画面イメージ" class="responsive-img">
+    </div>
+
+    <div class="demo-sidebar">
+        <div class="control-section">
+            <p class="section-title">【ページ遷移】</p>
+            <div class="btn-list">
+                <a href="/attendance" class="btn btn-nav">画面に戻る</a>
+                <a href="/attendance/detail/1" class="btn btn-nav">詳細画面へ</a>
+            </div>
         </div>
 
-        <div class="attendance__display">
-            <h2 class="attendance__date">2026年5月5日(火)</h2>
-            <h1 class="attendance__time">08:00</h1>
-        </div>
-
-        <div class="attendance__actions">
-            @if(request('status') === 'finished')
-                <p class="attendance__message">お疲れ様でした。</p>
-            @else
-                <div class="button-row">
-                    <a href="#" class="btn btn--black">出勤</a>
-                    <a href="/attendance?status=finished" class="btn btn--black">退勤</a>
-                </div>
-                <div class="button-row">
-                    <a href="#" class="btn btn--black">休憩開始</a>
-                    <a href="#" class="btn btn--black">休憩終了</a>
-                </div>
-            @endif
+        <div class="control-section">
+            <p class="section-title">【状態切替】</p>
+            <div class="btn-list">
+                <a href="?status=before_work" class="btn btn-status {{ request('status') == 'before_work' || !request('status') ? 'active' : '' }}">① 出勤後</a>
+                <a href="?status=working" class="btn btn-status {{ request('status') == 'working' ? 'active' : '' }}">② 休憩中</a>
+                <a href="?status=resting" class="btn btn-status {{ request('status') == 'resting' ? 'active' : '' }}">③ 退勤後</a>
+                <a href="?status=finished" class="btn btn-status {{ request('status') == 'finished' ? 'active' : '' }}">④ D</a>
+                <a href="?status=error" class="btn btn-status {{ request('status') == 'error' ? 'active' : '' }}">⑤ E</a>
+            </div>
         </div>
     </div>
 </div>
