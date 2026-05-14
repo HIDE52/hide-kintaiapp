@@ -32,9 +32,7 @@
 .common-header__nav-groups {
     display: flex;
     flex-direction: column;
-    /* 上下に並べる */
     align-items: flex-end;
-    /* 右寄せにする */
     gap: 5px;
 }
 
@@ -67,7 +65,7 @@
     text-decoration: none;
     background: none;
     border: none;
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
     transition: opacity 0.3s;
 }
@@ -75,17 +73,6 @@
 .common-header__nav-link:hover,
 .common-header__nav-button:hover {
     opacity: 0.8;
-}
-
-.common-header__nav-btn {
-    background-color: #ffffff;
-    color: #000000;
-    padding: 6px 20px;
-    border-radius: 4px;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 16px;
-    display: inline-block;
 }
 
 .admin-nav .common-header__nav-link {

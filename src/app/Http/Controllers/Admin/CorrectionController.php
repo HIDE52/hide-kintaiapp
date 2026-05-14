@@ -9,11 +9,11 @@ class CorrectionController extends Controller
 {
     public function index()
     {
-        return view('admin.request.list'); //
+        return view('admin.correction.list'); //
     }
 
     public function showApprove($id)
     {
-        return view('admin.request.approve'); //
+        return view('admin.correction.approve'); //
     }
 }

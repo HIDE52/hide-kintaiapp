@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ class RegisterController extends Controller
     public function create()
     {
         // 指定したフォルダ階層のBladeファイルを表示する
-        return view('user.auth.register');
+        return view('auth.register');
     }
 
     public function store(Request $request) // ここは普通のRequestにしておく

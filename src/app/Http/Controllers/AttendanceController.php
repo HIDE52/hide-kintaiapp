@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
@@ -10,16 +11,25 @@ class AttendanceController extends Controller
     {
         $status = $request->query('status');
 
-        return view('user.attendance.index', compact('status'));
+        return view('attendance.index', compact('status'));
     }
 
     public function list()
     {
-        return view('user.attendance.list');
+        return view('attendance.list');
     }
 
     public function show($id)
     {
-        return view('user.attendance.detail');
+        return view('attendance.detail');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }
