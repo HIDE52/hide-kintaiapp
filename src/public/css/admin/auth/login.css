@@ -1,36 +1,46 @@
-.login-form {
+.admin-login {
     padding: 60px 0;
     width: 92%;
     max-width: 500px;
     margin: 0 auto;
 }
 
-.login-form__header {
+.admin-login__header {
     text-align: center;
     margin-bottom: 30px;
 }
 
-.login-form__title {
+.admin-login__title {
     font-size: 24px;
     font-weight: bold;
     color: #333;
 }
 
-.form__group {
+.admin-login__alert {
+    color: #ff4d4d;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin: 0 0 20px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.admin-form__group {
     margin-bottom: 20px;
     width: 100%;
 }
 
-.form__group-title {
+.admin-form__group-title {
     margin-bottom: 8px;
 }
 
-.form__label--item {
+.admin-form__label {
     font-size: 16px;
     color: #333;
 }
 
-.form__input {
+.admin-form__input {
     width: 100%;
     height: 45px;
     padding: 10px;
@@ -39,17 +49,17 @@
     font-size: 16px;
 }
 
-.form__error {
+.admin-form__error {
     color: #ff4d4d;
     font-size: 14px;
     margin-top: 5px;
 }
 
-.login-form__btn-group {
+.admin-login__btn-group {
     margin-top: 40px;
 }
 
-.login-form__btn-submit {
+.admin-login__btn-submit {
     width: 100%;
     padding: 12px 0;
     background-color: #ff4d4d;
@@ -62,17 +72,6 @@
     transition: opacity 0.3s;
 }
 
-.login-form__btn-submit:hover {
+.admin-login__btn-submit:hover {
     opacity: 0.8;
-}
-
-.login-form__link {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.login-form__link a {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 14px;
 }
