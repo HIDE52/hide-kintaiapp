@@ -18,8 +18,14 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            if (Auth::user()->role !== 1) {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'こちらの画面は管理者専用です。一般ユーザーはログインできません。',
+                ]);
+            }
 
+            $request->session()->regenerate();
             return redirect()->intended('/admin/attendance/list');
         }
 

@@ -18,7 +18,7 @@
     @endif
 
     <div class="admin-login__body-content">
-        <form class="admin-form" action="/login" method="post" novalidate>
+        <form class="admin-form" action="/admin/login" method="post" novalidate>
             @csrf
 
             <div class="admin-form__group">
