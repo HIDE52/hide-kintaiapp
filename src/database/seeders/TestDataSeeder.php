@@ -60,7 +60,6 @@ class TestDataSeeder extends Seeder
                     'punch_out' => null,
                 ]);
             } elseif ($date->isToday()) {
-                // 出勤前状態
             } else {
                 $attendanceB = $userB->attendances()->create([
                     'date' => $date->format('Y-m-d'),

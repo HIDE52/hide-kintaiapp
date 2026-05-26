@@ -7,6 +7,7 @@ use App\Models\Attendance;
 use App\Models\Rest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AttendanceListRequest;
 
 class AttendanceController extends Controller
 {
@@ -150,5 +151,84 @@ class AttendanceController extends Controller
         ]);
 
         return redirect()->back()->with('session_success', 'お疲れ様でした。');
+    }
+
+    public function list(AttendanceListRequest $request)
+    {
+        $monthParam = $request->input('month', Carbon::now()->format('Y-m'));
+        $currentMonthStr = Carbon::now()->format('Y-m');
+
+        if ($monthParam > $currentMonthStr) {
+            abort(404, '未来の月は表示できません。');
+        }
+
+        $targetCarbon = Carbon::parse($monthParam . '-01');
+        $currentMonth = $targetCarbon->format('Y-m');
+        $prevMonth = $targetCarbon->copy()->subMonth()->format('Y-m');
+        $nextMonth = $targetCarbon->copy()->addMonth()->format('Y-m');
+
+        $showNextButton = true;
+        if ($nextMonth > $currentMonthStr) {
+            $showNextButton = false;
+        }
+
+        $attendances = Attendance::where('user_id', Auth::id())
+            ->whereYear('date', $targetCarbon->year)
+            ->whereMonth('date', $targetCarbon->month)
+            ->orderBy('date', 'asc')
+            ->get();
+
+        foreach ($attendances as $attendance) {
+            $punchIn = Carbon::parse($attendance->punch_in)->startOfMinute();
+
+            if ($attendance->punch_out) {
+                $punchOut = Carbon::parse($attendance->punch_out)->startOfMinute();
+                $stayMinutes = $punchIn->diffInMinutes($punchOut);
+            } else {
+                $stayMinutes = 0;
+            }
+
+            $totalRestMinutes = 0;
+            foreach ($attendance->rests as $rest) {
+                $breakIn = Carbon::parse($rest->break_in)->startOfMinute();
+                if ($rest->break_out) {
+                    $breakOut = Carbon::parse($rest->break_out)->startOfMinute();
+                    $totalRestMinutes += $breakIn->diffInMinutes($breakOut);
+                }
+            }
+
+            $totalWorkingMinutes = $stayMinutes - $totalRestMinutes;
+
+            if ($totalWorkingMinutes > 0) {
+                $hours = floor($totalWorkingMinutes / 60);
+                $mins = $totalWorkingMinutes % 60;
+                $attendance->display_total = sprintf('%02d:%02d', $hours, $mins);
+            } else {
+                $attendance->display_total = '00:00';
+            }
+
+            $restHours = floor($totalRestMinutes / 60);
+            $restMins = $totalRestMinutes % 60;
+            $attendance->display_rest = sprintf('%02d:%02d', $restHours, $restMins);
+        }
+
+        return view('attendance.list', compact(
+            'attendances',
+            'currentMonth',
+            'prevMonth',
+            'nextMonth',
+            'showNextButton',
+        ));
+    }
+
+    public function show($id)
+    {
+        $attendance = Attendance::find($id);
+
+        if (!$attendance) {
+            return redirect()->route('attendance.list');
+        }
+
+        return view('attendance.detail', compact('attendance'));
     }
 }

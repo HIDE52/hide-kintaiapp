@@ -1,0 +1,109 @@
+body {
+    background-color: #f7f7f7;
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.attendance-list {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.attendance-list__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    background-color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 8px;
+}
+
+.attendance-list__nav-btn {
+    color: #888888;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+}
+
+.attendance-list__nav-btn:hover {
+    color: #333333;
+}
+
+.attendance-list__input-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.attendance-list__month-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    cursor: pointer;
+    width: 32px;
+    padding: 0;
+    color: transparent;
+    overflow: hidden;
+}
+
+.attendance-list__current-month-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    user-select: none;
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+}
+
+.attendance-table__th {
+    font-size: 14px;
+    color: #888888;
+    text-align: left;
+    padding: 0 24px;
+    font-weight: normal;
+}
+
+.attendance-table__tr {
+    background-color: #ffffff;
+}
+
+.attendance-table__td {
+    padding: 20px 24px;
+    font-size: 16px;
+    color: #333333;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.attendance-table__td:first-child {
+    border-left: 1px solid #e8e8e8;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.attendance-table__td:last-child {
+    border-right: 1px solid #e8e8e8;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.attendance-table__detail-btn {
+    color: #4b4b4b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.attendance-table__detail-btn:hover {
+    text-decoration: underline;
+    color: #000000;
+}

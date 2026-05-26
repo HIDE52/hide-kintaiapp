@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -32,5 +36,15 @@ class LoginController extends Controller
         return back()->withErrors([
             'email' => 'ログイン情報が登録されていません。',
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

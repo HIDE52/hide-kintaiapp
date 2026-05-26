@@ -50,4 +50,4 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::patch('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminCorrectionController::class, 'approve']);
 });
 
-Route::post('/logout', [AttendanceController::class, 'logout'])->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

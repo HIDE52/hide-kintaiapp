@@ -1,38 +1,76 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/common.demo.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/attendance/list.css') }}">
 @endsection
 
 @section('content')
-<div class="demo-cockpit">
-    <div class="demo-main">
-    @php
-        $status = request('status', 'A');
-        $imageName = "img/screenshot_" . $status . ".png";
-    @endphp
-    <img src="{{ asset('storage/' . $imageName) }}" alt="画面イメージ" class="responsive-img">
-    </div>
+    <div class="attendance-list">
 
-    <div class="demo-sidebar">
-        <div class="control-section">
-            <p class="section-title">【ページ遷移】</p>
-            <div class="btn-list">
-                <a href="/attendance" class="btn btn-nav">画面に戻る</a>
-                <a href="/attendance/detail/1" class="btn btn-nav">詳細画面へ</a>
-            </div>
+        <div class="attendance-list__nav">
+            <a href="{{ route('attendance.list', ['month' => $prevMonth]) }}" class="attendance-list__nav-btn attendance-list__nav-btn--prev">
+                &larr; 前月
+            </a>
+
+            <form action="{{ route('attendance.list') }}" method="GET" class="attendance-list__month-form" id="monthForm">
+                <div class="attendance-list__input-container">
+                    <input type="month" name="month" id="month-picker" value="{{ \Carbon\Carbon::parse($currentMonth)->format('Y-m') }}" onchange="document.getElementById('monthForm').submit();" class="attendance-list__month-input">
+                    <span class="attendance-list__current-month-text">
+                        {{ \Carbon\Carbon::parse($currentMonth)->format('Y/m') }}
+                    </span>
+                </div>
+            </form>
+
+            @if($showNextButton)
+                <a href="{{ route('attendance.list', ['month' => $nextMonth]) }}" class="attendance-list__nav-btn attendance-list__nav-btn--next">
+                    翌月 &rarr;
+                </a>
+            @else
+                <span class="attendance-list__nav-btn attendance-list__nav-btn--next" style="visibility: hidden;">翌月 &rarr;</span>
+            @endif
         </div>
 
-        <div class="control-section">
-            <p class="section-title">【状態切替】</p>
-            <div class="btn-list">
-                <a href="?status=before_work" class="btn btn-status {{ request('status') == 'before_work' || !request('status') ? 'active' : '' }}">① A</a>
-                <a href="?status=working" class="btn btn-status {{ request('status') == 'working' ? 'active' : '' }}">② B</a>
-                <a href="?status=resting" class="btn btn-status {{ request('status') == 'resting' ? 'active' : '' }}">③ C</a>
-                <a href="?status=finished" class="btn btn-status {{ request('status') == 'finished' ? 'active' : '' }}">④ D</a>
-                <a href="?status=error" class="btn btn-status {{ request('status') == 'error' ? 'active' : '' }}">⑤ E</a>
-            </div>
-        </div>
+        <table class="attendance-table">
+            <thead>
+                <tr>
+                    <th class="attendance-table__th">日付</th>
+                    <th class="attendance-table__th">出勤</th>
+                    <th class="attendance-table__th">退勤</th>
+                    <th class="attendance-table__th">休憩</th>
+                    <th class="attendance-table__th">合計</th>
+                    <th class="attendance-table__th">詳細</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($attendances as $attendance)
+                    @php
+                        $carbonDate = \Carbon\Carbon::parse($attendance->date);
+                        $weeks = ['日', '月', '火', '水', '木', '金', '土'];
+                        $weekStr = $weeks[$carbonDate->dayOfWeek];
+                    @endphp
+                    <tr class="attendance-table__tr">
+                        <td class="attendance-table__td">{{ $carbonDate->format('m/d') }}({{ $weekStr }})</td>
+                        <td class="attendance-table__td">
+                            {{ $attendance->punch_in ? \Carbon\Carbon::parse($attendance->punch_in)->format('H:i') : '' }}
+                        </td>
+                        <td class="attendance-table__td">
+                            {{ $attendance->punch_out ? \Carbon\Carbon::parse($attendance->punch_out)->format('H:i') : '' }}
+                        </td>
+                        <td class="attendance-table__td">
+                            {{ $attendance->display_rest }}
+                        </td>
+                        <td class="attendance-table__td">
+                            {{ $attendance->display_total }}
+                        </td>
+                        <td class="attendance-table__td">
+                            <a href="{{ route('attendance.show', ['id' => $attendance->id]) }}" class="attendance-table__detail-btn">
+                                詳細
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
     </div>
-</div>
 @endsection
