@@ -217,18 +217,44 @@ class AttendanceController extends Controller
             'currentMonth',
             'prevMonth',
             'nextMonth',
-            'showNextButton',
+            'showNextButton'
         ));
     }
 
     public function show($id)
     {
-        $attendance = Attendance::find($id);
+        $attendance = Attendance::with([
+            'rests',
+            'correctionAttendances.correctionRests'
+        ])->find($id);
 
-        if (!$attendance) {
+        if (!$attendance || $attendance->user_id !== Auth::id()) {
             return redirect()->route('attendance.list');
         }
 
-        return view('attendance.detail', compact('attendance'));
+        $latestCorrection = $attendance->correctionAttendances
+            ->where('attendance_id', $attendance->id)
+            ->sortByDesc('created_at')
+            ->first();
+
+        $isWaiting = $latestCorrection && $latestCorrection->status === 0;
+
+        if ($isWaiting) {
+            $attendance->punch_in = $latestCorrection->requested_punch_in;
+            $attendance->punch_out = $latestCorrection->requested_punch_out;
+            $attendance->note = $latestCorrection->remark;
+
+            $formattedRests = [];
+            foreach ($latestCorrection->correctionRests as $cRest) {
+                $formattedRests[] = (object)[
+                    'break_in' => $cRest->requested_break_in,
+                    'break_out' => $cRest->requested_break_out
+                ];            }
+            $attendance->setRelation('rests', collect($formattedRests));
+        }
+
+        $currentDate = Carbon::parse($attendance->date)->isoFormat('YYYY年MM月DD日(ddd)');
+
+        return view('attendance.detail', compact('attendance', 'currentDate', 'isWaiting'));
     }
 }
