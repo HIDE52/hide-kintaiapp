@@ -73,7 +73,7 @@ class AttendanceController extends Controller
         return redirect()->back();
     }
 
-    public function breakStart()
+    public function restStart()
     {
         $user = Auth::user();
         $today = Carbon::today()->format('Y-m-d');
@@ -94,7 +94,7 @@ class AttendanceController extends Controller
         return redirect()->back();
     }
 
-    public function breakEnd()
+    public function restEnd()
     {
         $user = Auth::user();
         $today = Carbon::today()->format('Y-m-d');
@@ -237,9 +237,9 @@ class AttendanceController extends Controller
             ->sortByDesc('created_at')
             ->first();
 
-        $isWaiting = $latestCorrection && $latestCorrection->status === 0;
+        $isPending = $latestCorrection && $latestCorrection->status === 0;
 
-        if ($isWaiting) {
+        if ($isPending) {
             $attendance->punch_in = $latestCorrection->requested_punch_in;
             $attendance->punch_out = $latestCorrection->requested_punch_out;
             $attendance->note = $latestCorrection->remark;
@@ -249,12 +249,13 @@ class AttendanceController extends Controller
                 $formattedRests[] = (object)[
                     'break_in' => $cRest->requested_break_in,
                     'break_out' => $cRest->requested_break_out
-                ];            }
+                ];
+            }
             $attendance->setRelation('rests', collect($formattedRests));
         }
 
         $currentDate = Carbon::parse($attendance->date)->isoFormat('YYYY年MM月DD日(ddd)');
 
-        return view('attendance.detail', compact('attendance', 'currentDate', 'isWaiting'));
+        return view('attendance.detail', compact('attendance', 'currentDate', 'isPending'));
     }
 }
