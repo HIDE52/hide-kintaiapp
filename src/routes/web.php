@@ -47,7 +47,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/stamp_correction_request/list', [AdminCorrectionController::class, 'index'])->name('admin.request.index');
 
     Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminCorrectionController::class, 'showApprove']);
-    Route::patch('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminCorrectionController::class, 'approve']);
+    Route::put('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminCorrectionController::class, 'approve']);
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

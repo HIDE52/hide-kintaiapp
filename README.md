@@ -53,7 +53,6 @@ cp .env.example .env
 
 ⓸ .env.example に最適化済みの設定が入っているため、基本的にはそのままで動作します）
 
-
 ⓹ セキュリティに必要な「鍵」を作ります。
 
 ```
@@ -62,7 +61,6 @@ PHPコンテナ上
 php artisan key:generate
 
 ```
-
 
 3⃣ データベースの構築
 
@@ -210,7 +208,7 @@ php artisan migrate --env=testing
 ```
 PHPコンテナ上
 
-php artisan test tests
+php artisan test
 ```
 
 ## メール認証機能の設定
