@@ -7,6 +7,12 @@
 @section('content')
     <div class="admin-attendance">
 
+        @if (session('success'))
+            <div class="admin-attendance__alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <h2 class="admin-attendance__title">{{ $displayDate }}の勤怠</h2>
 
         <div class="admin-attendance__nav">

@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+body {
+    background-color: #f7f7f7;
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.staff-list {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 0 24px;
+}
+
+.staff-list__title {
+    text-align: left;
+    font-size: 24px;
+    color: #333333;
+    margin-bottom: 35px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.staff-list__title::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 28px;
+    background-color: #000000;
+    border-radius: 2px;
+}
+
+.staff-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.staff-table__th,
+.staff-table__td {
+    vertical-align: middle;
+    padding: 16px 20px;
+    white-space: nowrap;
+}
+
+.staff-table__th {
+    font-size: 14px;
+    color: #888888;
+    font-weight: normal;
+    border-top: 1px solid #eaeeef;
+    border-bottom: 1px solid #eaeeef;
+    padding-top: 22px;
+    padding-bottom: 22px;
+}
+
+.staff-table__td {
+    font-size: 16px;
+    color: #333333;
+    border-top: 1px solid #eaeeef;
+    border-bottom: 1px solid #eaeeef;
+    padding-top: 22px;
+    padding-bottom: 22px;
+}
+
+.staff-table__th--name,
+.staff-table__td--name {
+    width: 30%;
+    text-align: left;
+}
+
+.staff-table__th--name {
+    padding-left: 170px;
+}
+
+.staff-table__td--name {
+    padding-left: 150px;
+    font-weight: 500;
+}
+
+.staff-table__th--email,
+.staff-table__td--email {
+    width: 50%;
+    text-align: center;
+}
+
+.staff-table__th--detail,
+.staff-table__td--detail {
+    width: 20%;
+    text-align: right;
+}
+
+.staff-table__th--detail {
+    padding-right: 140px;
+}
+
+.staff-table__td--detail {
+    padding-right: 150px;
+}
+
+.staff-table__tr-head,
+.staff-table__tr {
+    background-color: #ffffff;
+}
+
+.staff-table__th:first-child,
+.staff-table__td:first-child {
+    border-left: 1px solid #eaeeef;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.staff-table__th:last-child,
+.staff-table__td:last-child {
+    border-right: 1px solid #eaeeef;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.staff-table__detail-btn {
+    color: #333333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+    display: inline-block;
+}
+
+.staff-table__detail-btn:hover {
+    text-decoration: underline;
+    color: #000000;
+}
+
+.no-data-alert {
+    color: #777777;
+    font-size: 14px;
+    text-align: center !important;
+    padding: 35px !important;
+}
+
+.form-novalidate-guard,
+.form-safe-protection {
+    display: none;
+}

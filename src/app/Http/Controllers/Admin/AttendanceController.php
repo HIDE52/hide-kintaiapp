@@ -26,7 +26,7 @@ class AttendanceController extends Controller
         }
 
         if ($targetDate->isFuture()) {
-            abort(404, '未来の日付は表示できません。');
+            abort(403, '未来の日付は表示できません。');
         }
 
         $prevDate = $targetDate->copy()->subDay()->toDateString();

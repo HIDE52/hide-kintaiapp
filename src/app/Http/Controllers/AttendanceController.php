@@ -159,7 +159,7 @@ class AttendanceController extends Controller
         $currentMonthStr = Carbon::now()->format('Y-m');
 
         if ($monthParam > $currentMonthStr) {
-            abort(404, '未来の月は表示できません。');
+            abort(403, '未来の月は表示できません。');
         }
 
         $targetCarbon = Carbon::parse($monthParam . '-01');
