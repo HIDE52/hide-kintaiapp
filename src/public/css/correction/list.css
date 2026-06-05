@@ -12,11 +12,18 @@ body {
     padding: 0 20px;
 }
 
+.correction-list__container {
+    width: 100%;
+}
+
 .correction-list__title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 30px;
     color: #333333;
+    border-left: 4px solid #000000;
+    padding-left: 12px;
+    line-height: 1;
 }
 
 .correction-list__tabs {
@@ -53,20 +60,40 @@ body {
     table-layout: fixed;
 }
 
-.correction-table__th {
-    font-size: 14px;
-    color: #888888;
+.correction-table__thead-tr {
+    background-color: #ffffff;
+}
+
+.correction-table__thead-tr .correction-table__th {
+    padding: 20px 24px;
+    font-size: 16px;
+    color: #666666;
+    font-weight: bold;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
     text-align: left;
-    padding: 0 20px;
-    font-weight: normal;
+    box-sizing: border-box;
+}
+
+.correction-table__thead-tr .correction-table__th:first-child {
+    border-left: 1px solid #e8e8e8;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.correction-table__thead-tr .correction-table__th:last-child {
+    border-right: 1px solid #e8e8e8;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .correction-table__th--status {
-    width: 15%;
+    width: 14%;
+    text-align: center !important;
 }
 
 .correction-table__th--name {
-    width: 15%;
+    width: 16%;
 }
 
 .correction-table__th--date {
@@ -83,6 +110,7 @@ body {
 
 .correction-table__th--detail {
     width: 12%;
+    text-align: center !important;
 }
 
 .correction-table__tr {
@@ -90,19 +118,43 @@ body {
 }
 
 .correction-table__td {
-    padding: 20px 20px;
+    padding: 20px 24px;
     font-size: 16px;
-    color: #333333;
+    color: #666666;
     border-top: 1px solid #e8e8e8;
     border-bottom: 1px solid #e8e8e8;
+    text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    box-sizing: border-box;
 }
 
-.correction-table__td--name-text,
+.correction-table__th--status,
+.correction-table__td--status-cell,
+.correction-table__th--detail,
+.correction-table__td--detail-cell {
+    text-align: center !important;
+}
+
+.correction-table__td--name-text {
+    text-align: left;
+}
+
+.correction-table__name-string {
+    letter-spacing: 0.06em;
+    font-weight: 500;
+}
+
 .correction-table__td--reason-text {
     text-align: left;
+    line-height: 1.5;
+    word-break: break-all;
+    white-space: normal !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2 !important;
+    overflow: hidden !important;
 }
 
 .correction-table__td:first-child {
@@ -133,15 +185,15 @@ body {
 }
 
 .correction-table__status--waiting {
-    color: #333333;
+    color: #666666;
 }
 
 .correction-table__status--approved {
-    color: #333333;
+    color: #aaaaaa;
 }
 
 .correction-table__detail-link {
-    color: #4b4b4b;
+    color: #000000;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.2s;
@@ -149,5 +201,5 @@ body {
 
 .correction-table__detail-link:hover {
     text-decoration: underline;
-    color: #000000;
+    color: #333333;
 }

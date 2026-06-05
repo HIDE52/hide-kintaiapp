@@ -1,4 +1,12 @@
-.attendance {
+@charset "UTF-8";
+
+body {
+    background-color: #f7f7f7;
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.attendance-stamp {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -9,36 +17,7 @@
     align-items: center;
 }
 
-.attendance__button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    width: 100%;
-    max-width: 600px;
-    margin-top: 40px;
-}
-
-.attendance__form {
-    flex: 1;
-    max-width: 280px;
-    width: 100%;
-}
-
-.stamp-button {
-    display: block;
-    width: 100%;
-    padding: 16px 0;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.attendance__info {
+.attendance-stamp__info {
     text-align: center;
     margin-bottom: 20px;
     width: 100%;
@@ -47,23 +26,7 @@
     align-items: center;
 }
 
-.attendance__date {
-    font-size: 26px;
-    color: #333333;
-    margin: 20px 0 10px 0;
-    font-weight: bold;
-    letter-spacing: 0.02em;
-}
-
-.attendance__time {
-    font-size: 80px;
-    color: #000000;
-    margin: 0;
-    font-weight: bold;
-    line-height: 1.0;
-}
-
-.attendance__status-badge {
+.attendance-stamp__status-badge {
     display: inline-block;
     padding: 6px 20px;
     font-size: 14px;
@@ -74,40 +37,86 @@
     margin-bottom: 10px;
 }
 
-.stamp-button--black {
-    background-color: #000000;
-    color: #ffffff;
-}
-
-.stamp-button--black:hover {
-    background-color: #333333;
-}
-
-.stamp-button--outline-gray {
-    background-color: #ffffff;
+.attendance-stamp__date {
+    font-size: 26px;
     color: #333333;
-    border: 1px solid #ced4da;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.stamp-button--outline-gray:hover {
-    background-color: #f8f9fa;
-}
-
-.attendance__thanks-text {
-    font-size: 24px;
+    margin: 20px 0 10px 0;
     font-weight: bold;
-    color: #000000;
-    text-align: center;
-    margin-top: 20px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
 }
 
-.attendance__alert {
+.attendance-stamp__time {
+    font-size: 80px;
+    color: #000000;
+    margin: 0;
+    font-weight: bold;
+    line-height: 1.0;
+}
+
+.attendance-stamp__alert {
     color: #ff0000;
     font-weight: bold;
     font-size: 18px;
     text-align: center;
     margin-bottom: 20px;
     width: 100%;
+}
+
+.attendance-stamp__btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 40px;
+}
+
+.attendance-stamp__form {
+    flex: 1;
+    max-width: 280px;
+    width: 100%;
+}
+
+.attendance-stamp__btn {
+    display: block;
+    width: 100%;
+    padding: 16px 0;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.attendance-stamp__btn--black {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.attendance-stamp__btn--black:hover {
+    background-color: #333333;
+}
+
+.attendance-stamp__btn--outline-gray {
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid #ced4da;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.attendance-stamp__btn--outline-gray:hover {
+    background-color: #f8f9fa;
+}
+
+.attendance-stamp__thanks-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    margin-top: 20px;
+    letter-spacing: 0.05em;
 }

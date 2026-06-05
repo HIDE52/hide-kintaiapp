@@ -42,11 +42,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/staff/list', [AdminStaffController::class, 'index'])->name('admin.staff.index');
 
     Route::get('/attendance/staff/{id}', [AdminStaffController::class, 'showStaff'])->name('admin.staff.attendance');
-    Route::get('/attendance/export/{id}', [AdminStaffController::class, 'exportCsv']);
+    Route::get('/attendance/export/{id}', [AdminStaffController::class, 'exportCsv'])->name('admin.staff.export');
 
     Route::get('/stamp_correction_request/list', [AdminCorrectionController::class, 'index'])->name('admin.request.index');
 
-    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminCorrectionController::class, 'showApprove']);
+    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminCorrectionController::class, 'showApprove'])->name('admin.correction.approve');
     Route::put('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminCorrectionController::class, 'approve']);
 });
 

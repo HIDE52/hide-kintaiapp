@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 body {
     background-color: #f7f7f7;
     margin: 0;
@@ -22,20 +24,8 @@ body {
 .attendance-detail-table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 12px;
+    border-spacing: 0 5px;
     table-layout: fixed;
-}
-
-.attendance-detail-table__td:nth-child(1) {
-    width: 25%;
-}
-
-.attendance-detail-table__td:nth-child(2) {
-    width: 50%;
-}
-
-.attendance-detail-table__td:nth-child(3) {
-    width: 25%;
 }
 
 .attendance-detail-table__tr {
@@ -48,111 +38,133 @@ body {
     color: #333333;
     border-top: 1px solid #e8e8e8;
     border-bottom: 1px solid #e8e8e8;
-}
-
-.attendance-detail-table__td:first-child {
-    border-left: 1px solid #e8e8e8;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-
-.attendance-detail-table__td:last-child {
-    border-right: 1px solid #e8e8e8;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
-
-.attendance-detail-table__label {
-    font-weight: bold;
-    color: #333333;
     vertical-align: middle;
+    box-sizing: border-box;
+}
+
+.attendance-detail-table__td:nth-child(1) {
+    width: 30%;
+    font-weight: bold;
+    color: #666666;
     padding-left: 32px;
+    border-left: 1px solid #e8e8e8;
+}
+
+.attendance-detail-table__td:nth-child(2) {
+    width: 50%;
+    padding-left: 24px;
+    border-left: none;
+    border-right: none;
+}
+
+.attendance-detail-table__td:nth-child(3) {
+    width: 20%;
+    padding: 0;
+    border-right: 1px solid #e8e8e8;
+}
+
+.attendance-detail-table__tr:first-of-type .attendance-detail-table__td:nth-child(1) {
+    border-top-left-radius: 10px;
+}
+
+.attendance-detail-table__tr:first-of-type .attendance-detail-table__td:nth-child(3) {
+    border-top-right-radius: 10px;
+}
+
+.attendance-detail-table__tr:last-of-type .attendance-detail-table__td:nth-child(1) {
+    border-bottom-left-radius: 10px;
+}
+
+.attendance-detail-table__tr:last-of-type .attendance-detail-table__td:nth-child(3) {
+    border-bottom-right-radius: 10px;
 }
 
 .attendance-detail-table__label--valign-top {
-    vertical-align: top;
-    padding-top: 24px;
+    vertical-align: top !important;
+    padding-top: 24px !important;
 }
 
-.attendance-detail-table__content {
-    vertical-align: middle;
-    padding-left: 24px;
-}
-
-.attendance-detail-table__content--relative {
-    position: relative;
-    height: 66px;
-}
-
-.attendance-detail-table__empty {
-    padding: 0;
-}
-
-.attendance-detail__name-group,
-.attendance-detail__time-group,
-.attendance-detail__date-group {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.attendance-detail__text-container {
     width: 100%;
-    max-width: 360px;
+    max-width: 320px;
+    box-sizing: border-box;
 }
 
-.attendance-detail__name-box-absolute {
-    position: absolute;
-    left: 54px;
-    top: 50%;
-    transform: translateY(-50%);
-    white-space: nowrap;
-    width: auto;
+.attendance-detail__plain-text {
     font-weight: bold;
     font-size: 16px;
     color: #333333;
+    padding-left: 16px;
+    display: inline-block;
 }
 
-.attendance-detail__input-time {
-    width: 120px;
-    padding: 10px 12px;
-    border: 1px solid #e1e1e1;
-    border-radius: 6px;
+.attendance-detail__date-group,
+.attendance-detail__time-group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 320px;
+    justify-content: space-between;
+}
+
+.attendance-detail__date-block-left,
+.attendance-detail__date-block-right {
+    width: 110px;
     text-align: center;
     font-size: 16px;
     font-weight: bold;
     color: #333333;
+    letter-spacing: 0.25em;
+    padding-left: 0.25em;
+}
+
+.attendance-detail__date-separator {
+    flex: 1;
+}
+
+.attendance-detail__input-time {
+    width: 110px;
+    padding: 10px 0;
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #333333;
     background-color: #ffffff;
     outline: none;
+    box-sizing: border-box;
+    text-align: center;
+    letter-spacing: 0.25em;
+    padding-left: 0.25em;
+}
+
+.attendance-detail__input-time[readonly],
+.attendance-detail__textarea[readonly] {
+    background: transparent;
+    border: none;
+    color: #333333;
+    cursor: default;
+}
+
+.attendance-detail__textarea[readonly] {
+    padding: 0;
+    padding-left: 24px;
+    height: auto;
 }
 
 .attendance-detail__separator {
     color: #333333;
     font-size: 16px;
     font-weight: bold;
-    flex-grow: 1;
     text-align: center;
-}
-
-.attendance-detail__date-box-year,
-.attendance-detail__date-box-month-day {
-    width: 120px;
-    padding: 10px 12px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333333;
-    text-align: center;
-    border: 1px solid transparent;
-    background-color: transparent;
-}
-
-.attendance-detail__separator-invisible {
-    flex-grow: 1;
-    visibility: hidden;
+    flex: 1;
 }
 
 .attendance-detail__textarea {
     width: 100%;
-    max-width: 360px;
     height: 120px;
     padding: 12px;
+    padding-left: 18px;
     border: 1px solid #e1e1e1;
     border-radius: 6px;
     resize: none;
@@ -160,6 +172,7 @@ body {
     outline: none;
     color: #333333;
     font-family: inherit;
+    box-sizing: border-box;
 }
 
 .attendance-detail-table__tr-button {
@@ -169,6 +182,7 @@ body {
 .attendance-detail-table__td-button {
     padding: 24px 0 0 0;
     text-align: right;
+    border: none !important;
 }
 
 .attendance-detail__submit-btn {
@@ -191,12 +205,22 @@ body {
     color: #ff4d4f;
     font-size: 14px;
     margin-top: 6px;
+    padding-left: 12px;
 }
 
 .attendance-detail__waiting-error {
-    color: #ff0000;
-    font-size: 16px;
-    font-weight: 800;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-weight: bold;
     text-align: right;
-    margin-top: 15px;
+    margin-top: 16px;
+    padding-right: 24px;
+}
+
+.attendance-detail-table__tr--last .attendance-detail-table__td:nth-child(1) {
+    border-bottom-left-radius: 10px !important;
+}
+
+.attendance-detail-table__tr--last .attendance-detail-table__td:nth-child(3) {
+    border-bottom-right-radius: 10px !important;
 }

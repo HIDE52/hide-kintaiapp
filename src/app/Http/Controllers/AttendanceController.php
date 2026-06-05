@@ -7,7 +7,6 @@ use App\Models\Attendance;
 use App\Models\Rest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\AttendanceListRequest;
 
 class AttendanceController extends Controller
 {
@@ -153,7 +152,7 @@ class AttendanceController extends Controller
         return redirect()->back()->with('session_success', 'お疲れ様でした。');
     }
 
-    public function list(AttendanceListRequest $request)
+    public function list(Request $request)
     {
         $monthParam = $request->input('month', Carbon::now()->format('Y-m'));
         $currentMonthStr = Carbon::now()->format('Y-m');

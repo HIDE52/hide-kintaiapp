@@ -17,7 +17,7 @@
 
         <table class="correction-table">
             <thead>
-                <tr>
+                <tr class="correction-table__thead-tr">
                     <th class="correction-table__th correction-table__th--status">状態</th>
                     <th class="correction-table__th correction-table__th--name">名前</th>
                     <th class="correction-table__th correction-table__th--date">対象日時</th>
@@ -29,18 +29,28 @@
             <tbody>
                 @forelse($requests as $requestItem)
                     <tr class="correction-table__tr">
-                        <td class="correction-table__td">
+                        <td class="correction-table__td correction-table__td--status-cell">
                             @if($requestItem->status === 0)
                                 <span class="correction-table__status correction-table__status--waiting">承認待ち</span>
                             @elseif($requestItem->status === 1)
                                 <span class="correction-table__status correction-table__status--approved">承認済み</span>
                             @endif
                         </td>
-                        <td class="correction-table__td correction-table__td--name-text">{{ $requestItem->user->name }}</td>
-                        <td class="correction-table__td">{{ \Carbon\Carbon::parse($requestItem->attendance->date)->format('Y/m/d') }}</td>
-                        <td class="correction-table__td correction-table__td--reason-text">{{ $requestItem->remark }}</td>
-                        <td class="correction-table__td">{{ $requestItem->created_at->format('Y/m/d') }}</td>
+                        <td class="correction-table__td correction-table__td--name-text">
+                            <span class="correction-table__name-string">
+                                {{ str_replace(' ', '', str_replace('　', '', $requestItem->user->name)) }}
+                            </span>
+                        </td>
                         <td class="correction-table__td">
+                            {{ \Carbon\Carbon::parse($requestItem->attendance->date)->format('Y/m/d') }}
+                        </td>
+                        <td class="correction-table__td correction-table__td--reason-text">
+                            {{ $requestItem->remark }}
+                        </td>
+                        <td class="correction-table__td">
+                            {{ $requestItem->created_at->format('Y/m/d') }}
+                        </td>
+                        <td class="correction-table__td correction-table__td--detail-cell">
                             <a href="{{ route('attendance.show', ['id' => $requestItem->attendance_id]) }}" class="correction-table__detail-link">詳細</a>
                         </td>
                     </tr>

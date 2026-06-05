@@ -8,7 +8,7 @@
     <div class="attendance-list">
 
         <div class="attendance-list__nav">
-            <a href="{{ route('attendance.list', ['month' => $prevMonth]) }}" class="attendance-list__nav-btn attendance-list__nav-btn--prev">
+            <a href="{{ route('attendance.list', ['month' => $prevMonth]) }}" class="attendance-list__nav-btn">
                 &larr; 前月
             </a>
 
@@ -22,23 +22,23 @@
             </form>
 
             @if($showNextButton)
-                <a href="{{ route('attendance.list', ['month' => $nextMonth]) }}" class="attendance-list__nav-btn attendance-list__nav-btn--next">
+                <a href="{{ route('attendance.list', ['month' => $nextMonth]) }}" class="attendance-list__nav-btn">
                     翌月 &rarr;
                 </a>
             @else
-                <span class="attendance-list__nav-btn attendance-list__nav-btn--next" style="visibility: hidden;">翌月 &rarr;</span>
+                <span class="attendance-list__nav-btn" style="visibility: hidden;">翌月 &rarr;</span>
             @endif
         </div>
 
-        <table class="attendance-table">
+        <table class="attendance-list-table">
             <thead>
                 <tr>
-                    <th class="attendance-table__th">日付</th>
-                    <th class="attendance-table__th">出勤</th>
-                    <th class="attendance-table__th">退勤</th>
-                    <th class="attendance-table__th">休憩</th>
-                    <th class="attendance-table__th">合計</th>
-                    <th class="attendance-table__th">詳細</th>
+                    <th class="attendance-list-table__th">日付</th>
+                    <th class="attendance-list-table__th">出勤</th>
+                    <th class="attendance-list-table__th">退勤</th>
+                    <th class="attendance-list-table__th">休憩</th>
+                    <th class="attendance-list-table__th">合計</th>
+                    <th class="attendance-list-table__th">詳細</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,22 +48,22 @@
                         $weeks = ['日', '月', '火', '水', '木', '金', '土'];
                         $weekStr = $weeks[$carbonDate->dayOfWeek];
                     @endphp
-                    <tr class="attendance-table__tr">
-                        <td class="attendance-table__td">{{ $carbonDate->format('m/d') }}({{ $weekStr }})</td>
-                        <td class="attendance-table__td">
+                    <tr class="attendance-list-table__tr">
+                        <td class="attendance-list-table__td">{{ $carbonDate->format('m/d') }}({{ $weekStr }})</td>
+                        <td class="attendance-list-table__td">
                             {{ $attendance->punch_in ? \Carbon\Carbon::parse($attendance->punch_in)->format('H:i') : '' }}
                         </td>
-                        <td class="attendance-table__td">
+                        <td class="attendance-list-table__td">
                             {{ $attendance->punch_out ? \Carbon\Carbon::parse($attendance->punch_out)->format('H:i') : '' }}
                         </td>
-                        <td class="attendance-table__td">
+                        <td class="attendance-list-table__td">
                             {{ $attendance->display_rest }}
                         </td>
-                        <td class="attendance-table__td">
+                        <td class="attendance-list-table__td">
                             {{ $attendance->display_total }}
                         </td>
-                        <td class="attendance-table__td">
-                            <a href="{{ route('attendance.show', ['id' => $attendance->id]) }}" class="attendance-table__detail-btn">
+                        <td class="attendance-list-table__td">
+                            <a href="{{ route('attendance.show', ['id' => $attendance->id]) }}" class="attendance-list-table__detail-btn">
                                 詳細
                             </a>
                         </td>

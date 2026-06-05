@@ -14,39 +14,37 @@
                 <tbody>
                     
                     <tr class="attendance-detail-table__tr">
-                        <td class="attendance-detail-table__td attendance-detail-table__label">名前</td>
-                        <td class="attendance-detail-table__td attendance-detail-table__content attendance-detail-table__content--relative">
-                            <div class="attendance-detail__name-group">
-                                <div class="attendance-detail__name-box-absolute">
-                                    {{ $attendance->user->name }}
-                                </div>
+                        <td class="attendance-detail-table__td">名前</td>
+                        <td class="attendance-detail-table__td">
+                            <div class="attendance-detail__text-container">
+                                <span class="attendance-detail__plain-text">{{ $attendance->user->name }}</span>
                             </div>
                         </td>
-                        <td class="attendance-detail-table__td attendance-detail-table__empty"></td>
+                        <td class="attendance-detail-table__td"></td>
                     </tr>
 
                     @php
                         $carbonDate = \Carbon\Carbon::parse($attendance->date);
                     @endphp
                     <tr class="attendance-detail-table__tr">
-                        <td class="attendance-detail-table__td attendance-detail-table__label">日付</td>
-                        <td class="attendance-detail-table__td attendance-detail-table__content">
+                        <td class="attendance-detail-table__td">日付</td>
+                        <td class="attendance-detail-table__td">
                             <div class="attendance-detail__date-group">
-                                <div class="attendance-detail__date-box-year">
-                                    {{ $carbonDate->format('Y年') }}
+                                <div class="attendance-detail__date-block-left">
+                                    {{ $carbonDate->format('Y') }}年
                                 </div>
-                                <span class="attendance-detail__separator-invisible">〜</span>
-                                <div class="attendance-detail__date-box-month-day">
-                                    {{ $carbonDate->format('m月d日') }}
+                                <span class="attendance-detail__date-separator"></span>
+                                <div class="attendance-detail__date-block-right">
+                                    {{ $carbonDate->format('m') }}月{{ $carbonDate->format('d') }}日
                                 </div>
                             </div>
                         </td>
-                        <td class="attendance-detail-table__td attendance-detail-table__empty"></td>
+                        <td class="attendance-detail-table__td"></td>
                     </tr>
 
                     <tr class="attendance-detail-table__tr">
-                        <td class="attendance-detail-table__td attendance-detail-table__label">出勤・退勤</td>
-                        <td class="attendance-detail-table__td attendance-detail-table__content">
+                        <td class="attendance-detail-table__td">出勤・退勤</td>
+                        <td class="attendance-detail-table__td">
                             <div class="attendance-detail__time-group">
                                 <input type="text" name="punch_in" class="attendance-detail__input-time" value="{{ old('punch_in', \Carbon\Carbon::parse($attendance->punch_in)->format('H:i')) }}" {{ $isPending ? 'readonly' : '' }}>
                                 <span class="attendance-detail__separator">〜</span>
@@ -59,15 +57,15 @@
                                 <div class="attendance-detail__error-message">{{ $message }}</div>
                             @enderror
                         </td>
-                        <td class="attendance-detail-table__td attendance-detail-table__empty"></td>
+                        <td class="attendance-detail-table__td"></td>
                     </tr>
 
                     @foreach($attendance->rests as $index => $rest)
                     <tr class="attendance-detail-table__tr">
-                        <td class="attendance-detail-table__td attendance-detail-table__label">
+                        <td class="attendance-detail-table__td">
                             休憩{{ $index + 1 }}
                         </td>
-                        <td class="attendance-detail-table__td attendance-detail-table__content">
+                        <td class="attendance-detail-table__td">
                             <div class="attendance-detail__time-group">
                                 <input type="text" name="rest_id[{{ $index }}][break_in]" class="attendance-detail__input-time" value="{{ old('rest_id.' . $index . '.break_in', \Carbon\Carbon::parse($rest->break_in)->format('H:i')) }}" {{ $isPending ? 'readonly' : '' }}>
                                 <span class="attendance-detail__separator">〜</span>
@@ -80,35 +78,37 @@
                                 <div class="attendance-detail__error-message">{{ $message }}</div>
                             @enderror
                         </td>
-                        <td class="attendance-detail-table__td attendance-detail-table__empty"></td>
+                        <td class="attendance-detail-table__td"></td>
                     </tr>
                     @endforeach
 
                     @if(!$isPending)
                     <tr class="attendance-detail-table__tr">
-                        <td class="attendance-detail-table__td attendance-detail-table__label">
+                        <td class="attendance-detail-table__td">
                             休憩{{ count($attendance->rests) + 1 }}
                         </td>
-                        <td class="attendance-detail-table__td attendance-detail-table__content">
+                        <td class="attendance-detail-table__td">
                             <div class="attendance-detail__time-group">
-                                <input type="text" name="rest_id[{{ count($attendance->rests) }}][break_in]" class="attendance-detail__input-time" value="{{ old('rest_id.' . count($attendance->rests) . '.break_in') }}" placeholder="00:00">
+                                <input type="text" name="rest_id[{{ count($attendance->rests) }}][break_in]" class="attendance-detail__input-time" value="{{ old('rest_id.' . count($attendance->rests) . '.break_in') }}">
                                 <span class="attendance-detail__separator">〜</span>
-                                <input type="text" name="rest_id[{{ count($attendance->rests) }}][break_out]" class="attendance-detail__input-time" value="{{ old('rest_id.' . count($attendance->rests) . '.break_out') }}" placeholder="00:00">
+                                <input type="text" name="rest_id[{{ count($attendance->rests) }}][break_out]" class="attendance-detail__input-time" value="{{ old('rest_id.' . count($attendance->rests) . '.break_out') }}">
                             </div>
                         </td>
-                        <td class="attendance-detail-table__td attendance-detail-table__empty"></td>
+                        <td class="attendance-detail-table__td"></td>
                     </tr>
                     @endif
 
-                    <tr class="attendance-detail-table__tr">
-                        <td class="attendance-detail-table__td attendance-detail-table__label attendance-detail-table__label--valign-top">備考</td>
-                        <td class="attendance-detail-table__td attendance-detail-table__content">
-                            <textarea name="remark" class="attendance-detail__textarea" {{ $isPending ? 'readonly' : '' }}>{{ old('remark', $attendance->note) }}</textarea>
+                    <tr class="attendance-detail-table__tr attendance-detail-table__tr--last">
+                        <td class="attendance-detail-table__td attendance-detail-table__label--valign-top">備考</td>
+                        <td class="attendance-detail-table__td">
+                            <div class="attendance-detail__text-container">
+                                <textarea name="remark" class="attendance-detail__textarea" {{ $isPending ? 'readonly' : '' }}>{{ old('remark', $attendance->note) }}</textarea>
+                            </div>
                             @error('remark')
                                 <div class="attendance-detail__error-message">{{ $message }}</div>
                             @enderror
                         </td>
-                        <td class="attendance-detail-table__td attendance-detail-table__empty"></td>
+                        <td class="attendance-detail-table__td"></td>
                     </tr>
 
                     @if(!$isPending)
