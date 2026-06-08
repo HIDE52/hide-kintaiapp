@@ -36,7 +36,7 @@ class AttendanceController extends Controller
                 $status = '退勤済';
             } else {
                 $latestRest = Rest::where('attendance_id', $attendance->id)
-                    ->latest()
+                    ->latest('id')
                     ->first();
 
                 if ($latestRest && is_null($latestRest->break_out)) {

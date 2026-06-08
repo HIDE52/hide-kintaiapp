@@ -25,7 +25,7 @@ class LoginController extends Controller
             if (Auth::user()->role !== 2) {
                 Auth::logout();
                 return back()->withErrors([
-                    'email' => 'こちらの画面は一般スタッフ専用です。',
+                    'email' => 'こちらの画面は一般スタッフ専用です',
                 ]);
             }
 
@@ -34,7 +34,7 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'ログイン情報が登録されていません。',
+            'email' => 'ログイン情報が登録されていません',
         ]);
     }
 

@@ -15,22 +15,22 @@ class TestDataSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => '山田　太朗',
+            'name' => '山田 太朗',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'role' => 1,
         ]);
 
         $userA = User::create([
-            'name' => '佐藤　隆',
+            'name' => '佐藤 隆',
             'email' => 'userA@example.com',
             'password' => Hash::make('password'),
             'role' => 2,
         ]);
 
-        $startOfMonth = Carbon::now()->startOfMonth();
+        $startDate = Carbon::now()->subMonth()->startOfMonth();
 
-        for ($date = $startOfMonth->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
+        for ($date = $startDate->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
             $attendanceA = $userA->attendances()->create([
                 'date' => $date->format('Y-m-d'),
                 'punch_in' => '09:00:00',
@@ -52,7 +52,7 @@ class TestDataSeeder extends Seeder
             'role' => 2,
         ]);
 
-        for ($date = $startOfMonth->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
+        for ($date = $startDate->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
             if ($date->isYesterday()) {
                 $userB->attendances()->create([
                     'date' => $date->format('Y-m-d'),
@@ -77,7 +77,7 @@ class TestDataSeeder extends Seeder
             'role' => 2,
         ]);
 
-        for ($date = $startOfMonth->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
+        for ($date = $startDate->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
             if ($date->isYesterday()) {
                 $attendanceC = $userC->attendances()->create([
                     'date' => $date->format('Y-m-d'),

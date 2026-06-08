@@ -34,15 +34,22 @@ class Attendance extends Model
 
     public function getTotalRestTimeAttribute()
     {
+        if ($this->rests->isEmpty()) {
+            return '00:00';
+        }
+
         $totalSeconds = 0;
 
         foreach ($this->rests as $rest) {
             if ($rest->break_in && $rest->break_out) {
-                $totalSeconds += Carbon::parse($rest->break_out)->diffInSeconds(Carbon::parse($rest->break_in));
+                $in = Carbon::parse($rest->break_in);
+                $out = Carbon::parse($rest->break_out);
+                $totalSeconds += $out->diffInSeconds($in);
             }
         }
 
         $totalMinutes = floor($totalSeconds / 60);
+
         $hours = floor($totalMinutes / 60);
         $minutes = $totalMinutes % 60;
 
@@ -68,9 +75,12 @@ class Attendance extends Model
         }
 
         $workSeconds = $totalSeconds - $restSeconds;
-        if ($workSeconds < 0) $workSeconds = 0;
+        if ($workSeconds < 0) {
+            $workSeconds = 0;
+        }
 
         $totalMinutes = ceil($workSeconds / 60);
+
         $hours = floor($totalMinutes / 60);
         $minutes = $totalMinutes % 60;
 

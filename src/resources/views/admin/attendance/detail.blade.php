@@ -49,7 +49,7 @@
                                 </div>
                                 <span class="admin-attendance-detail__date-separator"></span>
                                 <div class="admin-attendance-detail__date-block-right">
-                                    {{ $carbonDate->format('m') }}月{{ $carbonDate->format('d') }}日
+                                    {{ $carbonDate->format('n') }}月{{ $carbonDate->format('j') }}日
                                 </div>
                             </div>
                         </td>
@@ -103,10 +103,16 @@
                         </td>
                         <td class="admin-attendance-detail-table__td">
                             <div class="admin-attendance-detail__time-group">
-                                <input type="text" name="rest_id[{{ count($attendance->rests) }}][break_in]" class="admin-attendance-detail__input-time" value="{{ old('rest_id.' . count($attendance->rests) . '.break_in') }}" placeholder="00:00">
-                                <span class="admin-attendance-detail__separator">〜</span>
-                                <input type="text" name="rest_id[{{ count($attendance->rests) }}][break_out]" class="admin-attendance-detail__input-time" value="{{ old('rest_id.' . count($attendance->rests) . '.break_out') }}" placeholder="00:00">
-                            </div>
+                                <input type="text"
+                                    name="rest_id[{{ count($attendance->rests) }}][break_in]"
+                                    class="admin-attendance-detail__input-time"
+                                    value="{{ old('rest_id.' . count($attendance->rests) . '.break_in') }}"
+                                    placeholder=""> <span class="admin-attendance-detail__separator">〜</span>
+                                <input type="text"
+                                    name="rest_id[{{ count($attendance->rests) }}][break_out]"
+                                    class="admin-attendance-detail__input-time"
+                                    value="{{ old('rest_id.' . count($attendance->rests) . '.break_out') }}"
+                                    placeholder=""> </div>
                         </td>
                         <td class="admin-attendance-detail-table__td"></td>
                     </tr>
@@ -135,4 +141,21 @@
             </form>
         </table>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const textarea = document.querySelector('.admin-attendance-detail__textarea');
+        
+        if (textarea) {
+            function autoResize() {
+                textarea.style.height = '43px';
+                textarea.style.height = Math.max(43, textarea.scrollHeight) + 'px';
+            }
+
+            textarea.addEventListener('input', autoResize);
+            autoResize();
+        }
+    });
+    </script>
+
 @endsection

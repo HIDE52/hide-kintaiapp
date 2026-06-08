@@ -35,7 +35,7 @@
                                 </div>
                                 <span class="attendance-detail__date-separator"></span>
                                 <div class="attendance-detail__date-block-right">
-                                    {{ $carbonDate->format('m') }}月{{ $carbonDate->format('d') }}日
+                                    {{ $carbonDate->format('n') }}月{{ $carbonDate->format('j') }}日
                                 </div>
                             </div>
                         </td>
@@ -127,4 +127,21 @@
             <div class="attendance-detail__waiting-error">*承認待ちのため修正はできません。</div>
         @endif
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const textarea = document.querySelector('.attendance-detail__textarea');
+        
+        if (textarea) {
+            function autoResize() {
+                textarea.style.height = '43px';
+                textarea.style.height = Math.max(43, textarea.scrollHeight) + 'px';
+            }
+
+            textarea.addEventListener('input', autoResize);
+            autoResize();
+        }
+    });
+    </script>
+
 @endsection
