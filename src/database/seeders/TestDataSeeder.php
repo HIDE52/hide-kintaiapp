@@ -19,6 +19,7 @@ class TestDataSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'role' => 1,
+            'email_verified_at' => Carbon::now(),
         ]);
 
         $userA = User::create([
@@ -26,11 +27,16 @@ class TestDataSeeder extends Seeder
             'email' => 'userA@example.com',
             'password' => Hash::make('password'),
             'role' => 2,
+            'email_verified_at' => Carbon::now(),
         ]);
 
         $startDate = Carbon::now()->subMonth()->startOfMonth();
 
         for ($date = $startDate->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
+            if ($date->isSaturday() || $date->isSunday()) {
+                continue;
+            }
+
             $attendanceA = $userA->attendances()->create([
                 'date' => $date->format('Y-m-d'),
                 'punch_in' => '09:00:00',
@@ -50,9 +56,14 @@ class TestDataSeeder extends Seeder
             'email' => 'userB@example.com',
             'password' => Hash::make('password'),
             'role' => 2,
+            'email_verified_at' => Carbon::now(),
         ]);
 
         for ($date = $startDate->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
+            if ($date->dayOfWeek === 3) {
+                continue;
+            }
+
             if ($date->isYesterday()) {
                 $userB->attendances()->create([
                     'date' => $date->format('Y-m-d'),
@@ -75,9 +86,14 @@ class TestDataSeeder extends Seeder
             'email' => 'userC@example.com',
             'password' => Hash::make('password'),
             'role' => 2,
+            'email_verified_at' => Carbon::now(),
         ]);
 
         for ($date = $startDate->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
+            if ($date->isSaturday() || $date->isSunday() || $date->day == 20) {
+                continue;
+            }
+
             if ($date->isYesterday()) {
                 $attendanceC = $userC->attendances()->create([
                     'date' => $date->format('Y-m-d'),

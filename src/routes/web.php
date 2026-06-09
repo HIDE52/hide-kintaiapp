@@ -11,11 +11,12 @@ use App\Http\Controllers\Admin\LoginController as AdminLoginController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\CheckEmailVerificationByRole;
 
 Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', CheckEmailVerificationByRole::class])->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
     Route::post('/attendance/start', [AttendanceController::class, 'start']);
     Route::patch('/attendance/end', [AttendanceController::class, 'end']);

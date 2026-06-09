@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -10,103 +11,115 @@ class RegisterTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_name_is_required()
+    public function test_validation_error_occurs_when_name_is_empty_on_registration()
     {
-        $data = [
+        Carbon::setTestNow(Carbon::create(2026, 6, 8, 10, 0, 0));
+
+        $response = $this->post('/register', [
             'name'                  => '',
-            'email'                 => 'staff@example.com',
+            'email'                 => 'staff1@example.com',
             'password'              => 'password123',
             'password_confirmation' => 'password123',
-        ];
-
-        $response = $this->post('/register', $data);
+        ]);
 
         $response->assertSessionHasErrors([
             'name' => 'お名前を入力してください',
         ]);
+
+        Carbon::setTestNow();
     }
 
-    public function test_email_is_required()
+    public function test_validation_error_occurs_when_email_is_empty_on_registration()
     {
-        $data = [
-            'name'                  => 'テスト太郎',
+        Carbon::setTestNow(Carbon::create(2026, 6, 8, 10, 0, 0));
+
+        $response = $this->post('/register', [
+            'name'                  => 'スタッフ一郎',
             'email'                 => '',
             'password'              => 'password123',
             'password_confirmation' => 'password123',
-        ];
-
-        $response = $this->post('/register', $data);
+        ]);
 
         $response->assertSessionHasErrors([
             'email' => 'メールアドレスを入力してください',
         ]);
+
+        Carbon::setTestNow();
     }
 
-    public function test_password_must_be_at_least_8_characters()
+    public function test_validation_error_occurs_when_password_is_less_than_8_characters_on_registration()
     {
-        $data = [
-            'name'                  => 'テスト太郎',
-            'email'                 => 'staff@example.com',
+        Carbon::setTestNow(Carbon::create(2026, 6, 8, 10, 0, 0));
+
+        $response = $this->post('/register', [
+            'name'                  => 'スタッフ一郎',
+            'email'                 => 'staff1@example.com',
             'password'              => 'pass123',
             'password_confirmation' => 'pass123',
-        ];
-
-        $response = $this->post('/register', $data);
+        ]);
 
         $response->assertSessionHasErrors([
             'password' => 'パスワードは8文字以上で入力してください',
         ]);
+
+        Carbon::setTestNow();
     }
 
-    public function test_password_must_be_confirmed()
+    public function test_validation_error_occurs_when_password_does_not_match_confirmation_on_registration()
     {
-        $data = [
-            'name'                  => 'テスト太郎',
-            'email'                 => 'staff@example.com',
+        Carbon::setTestNow(Carbon::create(2026, 6, 8, 10, 0, 0));
+
+        $response = $this->post('/register', [
+            'name'                  => 'スタッフ一郎',
+            'email'                 => 'staff1@example.com',
             'password'              => 'password123',
             'password_confirmation' => 'different123',
-        ];
-
-        $response = $this->post('/register', $data);
+        ]);
 
         $response->assertSessionHasErrors([
             'password' => 'パスワードと一致しません',
         ]);
+
+        Carbon::setTestNow();
     }
 
-    public function test_password_is_required()
+    public function test_validation_error_occurs_when_password_is_empty_on_registration()
     {
-        $data = [
-            'name'                  => 'テスト太郎',
-            'email'                 => 'staff@example.com',
+        Carbon::setTestNow(Carbon::create(2026, 6, 8, 10, 0, 0));
+
+        $response = $this->post('/register', [
+            'name'                  => 'スタッフ一郎',
+            'email'                 => 'staff1@example.com',
             'password'              => '',
             'password_confirmation' => '',
-        ];
-
-        $response = $this->post('/register', $data);
+        ]);
 
         $response->assertSessionHasErrors([
             'password' => 'パスワードを入力してください',
         ]);
+
+        Carbon::setTestNow();
     }
 
-    public function test_user_can_register_successfully()
+    public function test_user_is_saved_successfully_when_valid_registration_data_is_submitted()
     {
-        $data = [
-            'name'                  => 'テスト太郎',
-            'email'                 => 'staff@example.com',
+        Carbon::setTestNow(Carbon::create(2026, 6, 8, 10, 0, 0));
+
+        $response = $this->post('/register', [
+            'name'                  => 'スタッフ一郎',
+            'email'                 => 'staff1@example.com',
             'password'              => 'password123',
             'password_confirmation' => 'password123',
-        ];
-
-        $response = $this->post('/register', $data);
+        ]);
 
         $this->assertDatabaseHas('users', [
-            'name'  => 'テスト太郎',
-            'email' => 'staff@example.com',
+            'name'  => 'スタッフ一郎',
+            'email' => 'staff1@example.com',
             'role'  => 2,
         ]);
 
         $response->assertRedirect('/attendance');
+
+        Carbon::setTestNow();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Admin;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,60 +10,54 @@ class AdminLoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_login_email_is_required()
+    public function test_validation_error_occurs_when_email_is_empty_on_admin_login()
     {
         User::factory()->create([
-            'email'    => 'admin@example.com',
+            'email'    => 'admin1@example.com',
             'password' => bcrypt('password123'),
             'role'     => 1,
         ]);
 
-        $loginData = [
+        $response = $this->post('/admin/login', [
             'email'    => '',
             'password' => 'password123',
-        ];
-
-        $response = $this->post('/admin/login', $loginData);
+        ]);
 
         $response->assertSessionHasErrors([
             'email' => 'メールアドレスを入力してください',
         ]);
     }
 
-    public function test_admin_login_password_is_required()
+    public function test_validation_error_occurs_when_password_is_empty_on_admin_login()
     {
         User::factory()->create([
-            'email'    => 'admin@example.com',
+            'email'    => 'admin1@example.com',
             'password' => bcrypt('password123'),
             'role'     => 1,
         ]);
 
-        $loginData = [
-            'email'    => 'admin@example.com',
+        $response = $this->post('/admin/login', [
+            'email'    => 'admin1@example.com',
             'password' => '',
-        ];
-
-        $response = $this->post('/admin/login', $loginData);
+        ]);
 
         $response->assertSessionHasErrors([
             'password' => 'パスワードを入力してください',
         ]);
     }
 
-    public function test_admin_login_credentials_do_not_match()
+    public function test_validation_error_occurs_when_invalid_credentials_are_submitted_on_admin_login()
     {
         User::factory()->create([
-            'email'    => 'admin@example.com',
+            'email'    => 'admin1@example.com',
             'password' => bcrypt('password123'),
             'role'     => 1,
         ]);
 
-        $loginData = [
+        $response = $this->post('/admin/login', [
             'email'    => 'wrong-admin@example.com',
             'password' => 'password123',
-        ];
-
-        $response = $this->post('/admin/login', $loginData);
+        ]);
 
         $response->assertSessionHasErrors([
             'email' => 'ログイン情報が登録されていません',

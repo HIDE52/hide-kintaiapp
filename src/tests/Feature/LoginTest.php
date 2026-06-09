@@ -10,62 +10,54 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_login_email_is_required()
+    public function test_validation_error_occurs_when_email_is_empty_on_staff_login()
     {
         User::factory()->create([
-            'email'    => 'staff@example.com',
+            'email'    => 'staff1@example.com',
             'password' => bcrypt('password123'),
             'role'     => 2,
         ]);
 
-        $loginData = [
+        $response = $this->post('/login', [
             'email'    => '',
             'password' => 'password123',
-        ];
-
-        $response = $this->post('/login', $loginData);
+        ]);
 
         $response->assertSessionHasErrors([
             'email' => 'メールアドレスを入力してください',
         ]);
     }
 
-    public function test_login_password_is_required()
+    public function test_validation_error_occurs_when_password_is_empty_on_staff_login()
     {
         User::factory()->create([
-            'email'    => 'staff@example.com',
+            'email'    => 'staff1@example.com',
             'password' => bcrypt('password123'),
             'role'     => 2,
         ]);
 
-        $loginData = [
-            'email'    => 'staff@example.com',
+        $response = $this->post('/login', [
+            'email'    => 'staff1@example.com',
             'password' => '',
-        ];
-
-        $response = $this->post('/login', $loginData);
+        ]);
 
         $response->assertSessionHasErrors([
             'password' => 'パスワードを入力してください',
         ]);
     }
 
-    public function test_login_credentials_do_not_match()
+    public function test_validation_error_occurs_when_invalid_credentials_are_submitted_on_staff_login()
     {
         User::factory()->create([
-            'email'    => 'staff@example.com',
+            'email'    => 'staff1@example.com',
             'password' => bcrypt('password123'),
             'role'     => 2,
         ]);
 
-        $loginData = [
-            'email'    => 'wrong-email@example.com',
+        $response = $this->post('/login', [
+            'email'    => 'wrong-staff@example.com',
             'password' => 'password123',
-        ];
-
-        $this->flushSession();
-
-        $response = $this->post('/login', $loginData);
+        ]);
 
         $response->assertSessionHasErrors([
             'email' => 'ログイン情報が登録されていません',

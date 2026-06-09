@@ -7,6 +7,8 @@
 @section('content')
     <div class="attendance-list">
 
+        <h2 class="attendance-list__title">勤怠一覧</h2>
+
         <div class="attendance-list__nav">
             <a href="{{ route('attendance.list', ['month' => $prevMonth]) }}" class="attendance-list__nav-btn">
                 &larr; 前月
@@ -32,7 +34,7 @@
 
         <table class="attendance-list-table">
             <thead>
-                <tr>
+                <tr class="attendance-list-table__tr">
                     <th class="attendance-list-table__th">日付</th>
                     <th class="attendance-list-table__th">出勤</th>
                     <th class="attendance-list-table__th">退勤</th>
@@ -43,13 +45,10 @@
             </thead>
             <tbody>
                 @foreach($attendances as $attendance)
-                    @php
-                        $carbonDate = \Carbon\Carbon::parse($attendance->date);
-                        $weeks = ['日', '月', '火', '水', '木', '金', '土'];
-                        $weekStr = $weeks[$carbonDate->dayOfWeek];
-                    @endphp
                     <tr class="attendance-list-table__tr">
-                        <td class="attendance-list-table__td">{{ $carbonDate->format('m/d') }}({{ $weekStr }})</td>
+                        <td class="attendance-list-table__td attendance-list-table__td--date">
+                            {{ $attendance->display_date }}
+                        </td>
                         <td class="attendance-list-table__td">
                             {{ $attendance->punch_in ? \Carbon\Carbon::parse($attendance->punch_in)->format('H:i') : '' }}
                         </td>
@@ -63,9 +62,11 @@
                             {{ $attendance->display_total }}
                         </td>
                         <td class="attendance-list-table__td">
-                            <a href="{{ route('attendance.show', ['id' => $attendance->id]) }}" class="attendance-list-table__detail-btn">
-                                詳細
-                            </a>
+                            @if($attendance->id)
+                                <a href="{{ route('attendance.show', ['id' => $attendance->id]) }}" class="attendance-list-table__detail-btn">
+                                    詳細
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
