@@ -77,15 +77,19 @@
     border-right: 1px solid #e8e8e8;
 }
 
-.admin-attendance-detail__tr:first-of-type .admin-attendance-detail__td:nth-child(1),
-.admin-attendance-detail__tr:first-of-type .admin-attendance-detail__td:nth-child(3) {
+.admin-attendance-detail__tr:first-of-type .admin-attendance-detail__td:nth-child(1) {
     border-top-left-radius: 10px;
+}
+
+.admin-attendance-detail__tr:first-of-type .admin-attendance-detail__td:nth-child(3) {
     border-top-right-radius: 10px;
 }
 
-.admin-attendance-detail__tr--last .admin-attendance-detail__td:nth-child(1),
-.admin-attendance-detail__tr--last .admin-attendance-detail__td:nth-child(3) {
+.admin-attendance-detail__tr--last .admin-attendance-detail__td:nth-child(1) {
     border-bottom-left-radius: 10px !important;
+}
+
+.admin-attendance-detail__tr--last .admin-attendance-detail__td:nth-child(3) {
     border-bottom-right-radius: 10px !important;
 }
 

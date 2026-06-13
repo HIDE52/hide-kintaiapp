@@ -59,9 +59,12 @@
                         <td class="admin-attendance-detail__td">出勤・退勤</td>
                         <td class="admin-attendance-detail__td">
                             <div class="admin-attendance-detail__time-group">
-                                <input type="text" name="punch_in" class="admin-attendance-detail__input-time" value="{{ old('punch_in', \Carbon\Carbon::parse($attendance->punch_in)->format('H:i')) }}" {{ $isPending ? 'disabled' : '' }}>
+                                <input type="text" name="punch_in" class="admin-attendance-detail__input-time" value="{{ old('punch_in', \Carbon\Carbon::parse($isPending ? $pendingRequest->requested_punch_in : $attendance->punch_in)->format('H:i')) }}" {{ $isPending ? 'disabled' : '' }}>
                                 <span class="admin-attendance-detail__separator">〜</span>
-                                <input type="text" name="punch_out" class="admin-attendance-detail__input-time" value="{{ old('punch_out', $attendance->punch_out ? \Carbon\Carbon::parse($attendance->punch_out)->format('H:i') : '') }}" {{ $isPending ? 'disabled' : '' }}>
+                                @php
+                                    $displayPunchOut = $isPending ? $pendingRequest->requested_punch_out : $attendance->punch_out;
+                                @endphp
+                                <input type="text" name="punch_out" class="admin-attendance-detail__input-time" value="{{ old('punch_out', $displayPunchOut ? \Carbon\Carbon::parse($displayPunchOut)->format('H:i') : '') }}" {{ $isPending ? 'disabled' : '' }}>
                             </div>
                             @error('punch_in')
                                 <div class="admin-attendance-detail__error-message">{{ $message }}</div>
@@ -73,14 +76,22 @@
                         <td class="admin-attendance-detail__td"></td>
                     </tr>
 
-                    @foreach($attendance->rests as $index => $rest)
+                    @php
+                        $displayRests = $isPending ? $pendingRequest->correctionRests : $attendance->rests;
+                    @endphp
+
+                    @foreach($displayRests as $index => $rest)
                     <tr class="admin-attendance-detail__tr">
                         <td class="admin-attendance-detail__td">休憩{{ $index + 1 }}</td>
                         <td class="admin-attendance-detail__td">
                             <div class="admin-attendance-detail__time-group">
-                                <input type="text" name="rest_id[{{ $index }}][break_in]" class="admin-attendance-detail__input-time" value="{{ old('rest_id.' . $index . '.break_in', \Carbon\Carbon::parse($rest->break_in)->format('H:i')) }}" {{ $isPending ? 'disabled' : '' }}>
+                                @php
+                                    $breakIn = $isPending ? $rest->requested_break_in : $rest->break_in;
+                                    $breakOut = $isPending ? $rest->requested_break_out : $rest->break_out;
+                                @endphp
+                                <input type="text" name="rest_id[{{ $index }}][break_in]" class="admin-attendance-detail__input-time" value="{{ old('rest_id.' . $index . '.break_in', \Carbon\Carbon::parse($breakIn)->format('H:i')) }}" {{ $isPending ? 'disabled' : '' }}>
                                 <span class="admin-attendance-detail__separator">〜</span>
-                                <input type="text" name="rest_id[{{ $index }}][break_out]" class="admin-attendance-detail__input-time" value="{{ old('rest_id.' . $index . '.break_out', $rest->break_out ? \Carbon\Carbon::parse($rest->break_out)->format('H:i') : '') }}" {{ $isPending ? 'disabled' : '' }}>
+                                <input type="text" name="rest_id[{{ $index }}][break_out]" class="admin-attendance-detail__input-time" value="{{ old('rest_id.' . $index . '.break_out', $breakOut ? \Carbon\Carbon::parse($breakOut)->format('H:i') : '') }}" {{ $isPending ? 'disabled' : '' }}>
                             </div>
                         </td>
                         <td class="admin-attendance-detail__td"></td>
