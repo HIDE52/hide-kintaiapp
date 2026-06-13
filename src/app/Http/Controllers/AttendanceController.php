@@ -23,6 +23,11 @@ class AttendanceController extends Controller
             ->whereNull('punch_out')
             ->first();
 
+        if ($unfinishedAttendance) {
+            return redirect()->route('attendance.detail', ['id' => $unfinishedAttendance->id])
+                ->with('error_message', '前日の退勤打刻がされていません。勤怠詳細画面から修正申請を行ってください。');
+        }
+
         $attendance = Attendance::where('user_id', $user->id)
             ->where('date', $today)
             ->first();

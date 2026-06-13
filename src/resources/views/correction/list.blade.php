@@ -51,7 +51,7 @@
                             {{ $requestItem->created_at->format('Y/m/d') }}
                         </td>
                         <td class="correction-table__td correction-table__td--detail-cell">
-                            <a href="{{ route('attendance.show', ['id' => $requestItem->attendance_id]) }}" class="correction-table__detail-link">詳細</a>
+                            <a href="{{ route('attendance.detail', ['id' => $requestItem->attendance_id]) }}" class="correction-table__detail-link">詳細</a>
                         </td>
                     </tr>
                 @empty

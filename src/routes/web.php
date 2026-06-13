@@ -25,7 +25,7 @@ Route::middleware(['auth', CheckEmailVerificationByRole::class])->group(function
 
     Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance.list');
 
-    Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
+    Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show'])->name('attendance.detail');
     Route::post('/attendance/detail/{id}', [CorrectionController::class, 'store'])->name('correction.store');
 
     Route::get('/stamp_correction_request/list', [CorrectionController::class, 'index'])->name('request.index');

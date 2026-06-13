@@ -63,7 +63,7 @@
                         </td>
                         <td class="attendance-list-table__td">
                             @if($attendance->id)
-                                <a href="{{ route('attendance.show', ['id' => $attendance->id]) }}" class="attendance-list-table__detail-btn">
+                                <a href="{{ route('attendance.detail', ['id' => $attendance->id]) }}" class="attendance-list-table__detail-btn">
                                     詳細
                                 </a>
                             @endif

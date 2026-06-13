@@ -6,6 +6,12 @@
 
 @section('content')
     <div class="attendance-detail">
+        @if (session('error_message'))
+            <div class="attendance-detail__alert-error">
+                {{ session('error_message') }}
+            </div>
+        @endif
+
         <h2 class="attendance-detail__title">勤怠詳細</h2>
 
         <table class="attendance-detail-table">
@@ -143,5 +149,4 @@
         }
     });
     </script>
-
 @endsection
