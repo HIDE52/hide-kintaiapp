@@ -49,21 +49,29 @@ class AttendanceController extends Controller
 
         $displayDate = $targetDate->format('Y/m/d');
 
+        $titleDate = $targetDate->isoFormat('YYYY年M月D日');        
+
+        $formattedDateForPicker = $targetDate->toDateString();
+
         return view('admin.attendance.list', compact(
             'attendances',
             'displayDate',
+            'titleDate',
             'prevDate',
             'nextDate',
-            'showNextButton'
+            'showNextButton',
+            'formattedDateForPicker'
         ));
     }
 
     public function show($id)
     {
         $attendance = Attendance::with(['rests', 'correctionAttendances'])->findOrFail($id);
-        $isPending = $attendance->correctionAttendances->where('status', 0)->isNotEmpty();
 
-        return view('admin.attendance.detail', compact('attendance', 'isPending'));
+        $pendingRequest = $attendance->correctionAttendances->where('status', 0)->first();
+        $isPending = $pendingRequest !== null;
+
+        return view('admin.attendance.detail', compact('attendance', 'isPending', 'pendingRequest'));
     }
 
     public function update(AttendanceUpdateRequest $request, $id)

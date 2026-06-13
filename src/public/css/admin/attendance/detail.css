@@ -41,14 +41,18 @@ body {
     color: #ff4d4f;
 }
 
-.admin-attendance-detail-table {
+.admin-attendance-detail__table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 5px;
     table-layout: fixed;
 }
 
-.admin-attendance-detail-table__td {
+.admin-attendance-detail__tr {
+    background-color: #ffffff;
+}
+
+.admin-attendance-detail__td {
     padding: 20px 24px;
     font-size: 16px;
     color: #333333;
@@ -58,11 +62,7 @@ body {
     box-sizing: border-box;
 }
 
-.admin-attendance-detail-table__tr {
-    background-color: #ffffff;
-}
-
-.admin-attendance-detail-table__td:nth-child(1) {
+.admin-attendance-detail__td:nth-child(1) {
     width: 30%;
     font-weight: bold;
     color: #666666;
@@ -70,36 +70,36 @@ body {
     border-left: 1px solid #e8e8e8;
 }
 
-.admin-attendance-detail-table__td:nth-child(2) {
+.admin-attendance-detail__td:nth-child(2) {
     width: 50%;
     padding-left: 24px;
     border-left: none;
     border-right: none;
 }
 
-.admin-attendance-detail-table__td:nth-child(3) {
+.admin-attendance-detail__td:nth-child(3) {
     width: 20%;
     padding: 0;
     border-right: 1px solid #e8e8e8;
 }
 
-.admin-attendance-detail-table__tr:first-of-type .admin-attendance-detail-table__td:nth-child(1) {
+.admin-attendance-detail__tr:first-of-type .admin-attendance-detail__td:nth-child(1) {
     border-top-left-radius: 10px;
 }
 
-.admin-attendance-detail-table__tr:first-of-type .admin-attendance-detail-table__td:nth-child(3) {
+.admin-attendance-detail__tr:first-of-type .admin-attendance-detail__td:nth-child(3) {
     border-top-right-radius: 10px;
 }
 
-.admin-attendance-detail-table__tr--last .admin-attendance-detail-table__td:nth-child(1) {
+.admin-attendance-detail__tr--last .admin-attendance-detail__td:nth-child(1) {
     border-bottom-left-radius: 10px !important;
 }
 
-.admin-attendance-detail-table__tr--last .admin-attendance-detail-table__td:nth-child(3) {
+.admin-attendance-detail__tr--last .admin-attendance-detail__td:nth-child(3) {
     border-bottom-right-radius: 10px !important;
 }
 
-.admin-attendance-detail-table__label--valign-top {
+.admin-attendance-detail__label--valign-top {
     vertical-align: top !important;
     padding-top: 24px !important;
 }
@@ -190,11 +190,11 @@ body {
     overflow-y: hidden;
 }
 
-.admin-attendance-detail-table__tr-button {
+.admin-attendance-detail__tr-button {
     background-color: transparent;
 }
 
-.admin-attendance-detail-table__td-button {
+.admin-attendance-detail__td-button {
     padding: 24px 0 0 0;
     text-align: right;
     border: none !important;

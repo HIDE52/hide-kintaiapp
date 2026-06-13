@@ -47,20 +47,13 @@ class CorrectionController extends Controller
                 'punch_out' => $requestItem->requested_punch_out,
             ]);
 
-            foreach ($requestItem->correctionRests as $index => $correctionRest) {
-                $actualRest = $attendance->rests->get($index);
+            $attendance->rests()->delete();
 
-                if ($actualRest) {
-                    $actualRest->update([
-                        'break_in' => $correctionRest->requested_break_in,
-                        'break_out' => $correctionRest->requested_break_out,
-                    ]);
-                } else {
-                    $attendance->rests()->create([
-                        'break_in' => $correctionRest->requested_break_in,
-                        'break_out' => $correctionRest->requested_break_out,
-                    ]);
-                }
+            foreach ($requestItem->correctionRests as $correctionRest) {
+                $attendance->rests()->create([
+                    'break_in' => $correctionRest->requested_break_in,
+                    'break_out' => $correctionRest->requested_break_out,
+                ]);
             }
 
             $requestItem->update([

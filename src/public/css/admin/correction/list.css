@@ -1,22 +1,16 @@
 @charset "UTF-8";
 
-body {
-    background-color: #f7f7f7;
-    margin: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-}
-
-.admin-correction {
+.admin-correction-list {
     max-width: 850px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-.admin-correction__container {
+.admin-correction-list__container {
     width: 100%;
 }
 
-.admin-correction__title {
+.admin-correction-list__title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 30px;
@@ -26,13 +20,13 @@ body {
     line-height: 1;
 }
 
-.admin-correction__tabs {
+.admin-correction-list__tabs {
     display: flex;
     border-bottom: 2px solid #e0e0e0;
     margin-bottom: 20px;
 }
 
-.admin-correction__tab {
+.admin-correction-list__tab {
     display: block;
     padding: 12px 30px;
     font-size: 16px;
@@ -44,27 +38,27 @@ body {
     margin-bottom: -2px;
 }
 
-.admin-correction__tab:hover {
+.admin-correction-list__tab:hover {
     color: #333333;
 }
 
-.admin-correction__tab--active {
+.admin-correction-list__tab--active {
     color: #000000;
     border-bottom: 3px solid #000000;
 }
 
-.admin-correction-table {
+.admin-correction-list__table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 12px;
+    border-spacing: 0 5px;
     table-layout: fixed;
 }
 
-.admin-correction-table__thead-tr {
+.admin-correction-list__thead-tr {
     background-color: #ffffff;
 }
 
-.admin-correction-table__thead-tr .admin-correction-table__th {
+.admin-correction-list__thead-tr .admin-correction-list__th {
     padding: 20px 24px;
     font-size: 16px;
     color: #666666;
@@ -75,49 +69,49 @@ body {
     box-sizing: border-box;
 }
 
-.admin-correction-table__thead-tr .admin-correction-table__th:first-child {
+.admin-correction-list__thead-tr .admin-correction-list__th:first-child {
     border-left: 1px solid #e8e8e8;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
 
-.admin-correction-table__thead-tr .admin-correction-table__th:last-child {
+.admin-correction-list__thead-tr .admin-correction-list__th:last-child {
     border-right: 1px solid #e8e8e8;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-.admin-correction-table__th--status {
+.admin-correction-list__th--status {
     width: 14%;
     text-align: center !important;
 }
 
-.admin-correction-table__th--name {
+.admin-correction-list__th--name {
     width: 16%;
 }
 
-.admin-correction-table__th--date {
+.admin-correction-list__th--date {
     width: 18%;
 }
 
-.admin-correction-table__th--reason {
+.admin-correction-list__th--reason {
     width: 22%;
 }
 
-.admin-correction-table__th--request-date {
+.admin-correction-list__th--request-date {
     width: 18%;
 }
 
-.admin-correction-table__th--detail {
+.admin-correction-list__th--detail {
     width: 12%;
     text-align: center !important;
 }
 
-.admin-correction-table__tr {
+.admin-correction-list__tr {
     background-color: #ffffff;
 }
 
-.admin-correction-table__td {
+.admin-correction-list__td {
     padding: 20px 24px;
     font-size: 16px;
     color: #666666;
@@ -130,23 +124,23 @@ body {
     box-sizing: border-box;
 }
 
-.admin-correction-table__th--status,
-.admin-correction-table__td--status-cell,
-.admin-correction-table__th--detail,
-.admin-correction-table__td--detail-cell {
+.admin-correction-list__th--status,
+.admin-correction-list__td--status-cell,
+.admin-correction-list__th--detail,
+.admin-correction-list__td--detail-cell {
     text-align: center !important;
 }
 
-.admin-correction-table__td--name-text {
+.admin-correction-list__td--name-text {
     text-align: left;
 }
 
-.admin-correction-table__name-string {
+.admin-correction-list__name-string {
     letter-spacing: 0.06em;
     font-weight: 500;
 }
 
-.admin-correction-table__td--reason-text {
+.admin-correction-list__td--reason-text {
     text-align: left;
     line-height: 1.5;
     word-break: break-all;
@@ -157,19 +151,19 @@ body {
     overflow: hidden !important;
 }
 
-.admin-correction-table__td:first-child {
+.admin-correction-list__td:first-child {
     border-left: 1px solid #e8e8e8;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
 
-.admin-correction-table__td:last-child {
+.admin-correction-list__td:last-child {
     border-right: 1px solid #e8e8e8;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-.admin-correction-table__td--empty {
+.admin-correction-list__td--empty {
     text-align: center;
     color: #888888;
     padding: 40px 20px;
@@ -179,27 +173,27 @@ body {
     width: 100%;
 }
 
-.admin-status {
+.admin-correction-list__status {
     font-size: 16px;
     font-weight: bold;
 }
 
-.admin-status--waiting {
+.admin-correction-list__status--waiting {
     color: #666666;
 }
 
-.admin-status--approved {
+.admin-correction-list__status--approved {
     color: #aaaaaa;
 }
 
-.admin-link-btn {
+.admin-correction-list__link-btn {
     color: #000000;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.2s;
 }
 
-.admin-link-btn:hover {
+.admin-correction-list__link-btn:hover {
     text-decoration: underline;
     color: #333333;
 }

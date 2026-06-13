@@ -1,18 +1,12 @@
 @charset "UTF-8";
 
-body {
-    background-color: #f7f7f7;
-    margin: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-}
-
-.admin-approve {
+.admin-correction-approve {
     max-width: 800px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-.admin-approve__title {
+.admin-correction-approve__title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 30px;
@@ -21,18 +15,18 @@ body {
     color: #333333;
 }
 
-.admin-approve-table {
+.admin-correction-approve__table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 5px;
     table-layout: fixed;
 }
 
-.admin-approve-table__tr {
+.admin-correction-approve__tr {
     background-color: #ffffff;
 }
 
-.admin-approve-table__td {
+.admin-correction-approve__td {
     padding: 20px 24px;
     font-size: 16px;
     color: #333333;
@@ -42,7 +36,7 @@ body {
     box-sizing: border-box;
 }
 
-.admin-approve-table__td:nth-child(1) {
+.admin-correction-approve__td:nth-child(1) {
     width: 30%;
     font-weight: bold;
     color: #666666;
@@ -50,47 +44,47 @@ body {
     border-left: 1px solid #e8e8e8;
 }
 
-.admin-approve-table__td:nth-child(2) {
+.admin-correction-approve__td:nth-child(2) {
     width: 50%;
     padding-left: 24px;
     border-left: none;
     border-right: none;
 }
 
-.admin-approve-table__td:nth-child(3) {
+.admin-correction-approve__td:nth-child(3) {
     width: 20%;
     padding: 0;
     border-right: 1px solid #e8e8e8;
 }
 
-.admin-approve-table__tr:first-of-type .admin-approve-table__td:nth-child(1) {
+.admin-correction-approve__tr:first-of-type .admin-correction-approve__td:nth-child(1) {
     border-top-left-radius: 10px;
 }
 
-.admin-approve-table__tr:first-of-type .admin-approve-table__td:nth-child(3) {
+.admin-correction-approve__tr:first-of-type .admin-correction-approve__td:nth-child(3) {
     border-top-right-radius: 10px;
 }
 
-.admin-approve-table__tr--last .admin-approve-table__td:nth-child(1) {
+.admin-correction-approve__tr--last .admin-correction-approve__td:nth-child(1) {
     border-bottom-left-radius: 10px !important;
 }
 
-.admin-approve-table__tr--last .admin-approve-table__td:nth-child(3) {
+.admin-correction-approve__tr--last .admin-correction-approve__td:nth-child(3) {
     border-bottom-right-radius: 10px !important;
 }
 
-.admin-approve-table__label--valign-top {
+.admin-correction-approve__label--valign-top {
     vertical-align: top !important;
     padding-top: 24px !important;
 }
 
-.admin-approve__text-container {
+.admin-correction-approve__text-container {
     width: 100%;
     max-width: 320px;
     box-sizing: border-box;
 }
 
-.admin-approve__plain-text {
+.admin-correction-approve__plain-text {
     font-weight: bold;
     font-size: 16px;
     color: #333333;
@@ -98,8 +92,8 @@ body {
     display: inline-block;
 }
 
-.admin-approve__date-group,
-.admin-approve__time-group {
+.admin-correction-approve__date-group,
+.admin-correction-approve__time-group {
     display: flex;
     align-items: center;
     width: 100%;
@@ -107,8 +101,8 @@ body {
     justify-content: space-between;
 }
 
-.admin-approve__date-block-left,
-.admin-approve__date-block-right {
+.admin-correction-approve__date-block-left,
+.admin-correction-approve__date-block-right {
     width: 110px;
     text-align: center;
     font-size: 16px;
@@ -118,11 +112,11 @@ body {
     padding-left: 0.25em;
 }
 
-.admin-approve__date-separator {
+.admin-correction-approve__date-separator {
     flex: 1;
 }
 
-.admin-approve__text-time {
+.admin-correction-approve__text-time {
     width: 110px;
     padding: 10px 0;
     font-size: 17px;
@@ -134,7 +128,7 @@ body {
     display: inline-block;
 }
 
-.admin-approve__separator {
+.admin-correction-approve__separator {
     color: #333333;
     font-size: 16px;
     font-weight: bold;
@@ -142,7 +136,7 @@ body {
     flex: 1;
 }
 
-.admin-approve__textarea {
+.admin-correction-approve__textarea {
     width: 100%;
     height: 60px;
     padding: 10px 18px;
@@ -159,7 +153,7 @@ body {
     overflow-y: hidden;
 }
 
-.admin-approve__textarea[readonly] {
+.admin-correction-approve__textarea[readonly] {
     background-color: transparent;
     border: none;
     color: #333333;
@@ -169,7 +163,7 @@ body {
     padding: 0 16px;
 }
 
-.admin-approve__error-message {
+.admin-correction-approve__error-message {
     color: #ff0000;
     font-size: 14px;
     font-weight: bold;
@@ -180,13 +174,13 @@ body {
     background-color: transparent;
 }
 
-.admin-approve-table__td-button {
+.admin-correction-approve__td-button {
     padding: 24px 0 0 0;
     text-align: right;
     border: none !important;
 }
 
-.admin-approve__btn-base {
+.admin-correction-approve__btn-base {
     display: inline-block;
     padding: 12px 60px;
     font-size: 16px;
@@ -197,7 +191,7 @@ body {
     vertical-align: middle;
 }
 
-.admin-approve__submit-btn {
+.admin-correction-approve__submit-btn {
     background-color: #000000;
     color: #ffffff;
     border: none;
@@ -205,11 +199,11 @@ body {
     transition: background-color 0.2s;
 }
 
-.admin-approve__submit-btn:hover {
+.admin-correction-approve__submit-btn:hover {
     background-color: #333333;
 }
 
-.admin-approve__status-approved {
+.admin-correction-approve__status-approved {
     background-color: #e5e7eb;
     color: #4b5563;
     border: none;

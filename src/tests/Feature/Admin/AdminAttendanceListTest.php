@@ -28,16 +28,16 @@ class AdminAttendanceListTest extends TestCase
         ]);
 
         $attendance = Attendance::factory()->create([
-            'user_id'   => $staff->id,
-            'date'      => '2026-06-07',
-            'punch_in'  => '09:00:00',
+            'user_id' => $staff->id,
+            'date' => '2026-06-07',
+            'punch_in' => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
         Rest::factory()->create([
             'attendance_id' => $attendance->id,
-            'break_in'      => '12:00:00',
-            'break_out'     => '13:00:00',
+            'break_in' => '12:00:00',
+            'break_out' => '13:00:00',
         ]);
 
         $response = $this->actingAs($admin)->get('/admin/attendance/list');
@@ -57,7 +57,9 @@ class AdminAttendanceListTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 12, 0, 0));
 
-        $admin = User::factory()->create(['role' => 1]);
+        $admin = User::factory()->create([
+            'role' => 1,
+        ]);
 
         $response = $this->actingAs($admin)->get('/admin/attendance/list');
 
@@ -71,7 +73,9 @@ class AdminAttendanceListTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 12, 0, 0));
 
-        $admin = User::factory()->create(['role' => 1]);
+        $admin = User::factory()->create([
+            'role' => 1,
+        ]);
 
         $staff = User::factory()->create([
             'name' => 'スタッフ一郎',
@@ -80,7 +84,9 @@ class AdminAttendanceListTest extends TestCase
 
         $attendance = Attendance::factory()->create([
             'user_id' => $staff->id,
-            'date'    => '2026-06-06',
+            'date' => '2026-06-06',
+            'punch_in' => '09:00:00',
+            'punch_out' => '18:00:00',
         ]);
 
         $response = $this->actingAs($admin)->get('/admin/attendance/list?date=2026-06-06');
@@ -96,7 +102,9 @@ class AdminAttendanceListTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 8, 12, 0, 0));
 
-        $admin = User::factory()->create(['role' => 1]);
+        $admin = User::factory()->create([
+            'role' => 1,
+        ]);
 
         $response = $this->actingAs($admin)->get('/admin/attendance/list?date=2026-06-08');
 

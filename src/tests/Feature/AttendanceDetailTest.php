@@ -17,24 +17,22 @@ class AttendanceDetailTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'name' => 'スタッフ一郎',
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
+        $attendance = Attendance::factory()->create([
+            'user_id' => $staff->id,
             'date' => '2026-06-07',
             'punch_in' => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user)->get("/attendance/detail/{$attendance->id}");
+        $response = $this->actingAs($staff)->get("/attendance/detail/{$attendance->id}");
 
         $response->assertStatus(200);
-        $response->assertSee('テスト太郎');
+        $response->assertSee('スタッフ一郎');
 
         Carbon::setTestNow();
     }
@@ -43,21 +41,19 @@ class AttendanceDetailTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'name' => 'スタッフ一郎',
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
+        $attendance = Attendance::factory()->create([
+            'user_id' => $staff->id,
             'date' => '2026-06-07',
             'punch_in' => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user)->get("/attendance/detail/{$attendance->id}");
+        $response = $this->actingAs($staff)->get("/attendance/detail/{$attendance->id}");
 
         $response->assertStatus(200);
         $response->assertSee('2026');
@@ -69,21 +65,19 @@ class AttendanceDetailTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'name' => 'スタッフ一郎',
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
+        $attendance = Attendance::factory()->create([
+            'user_id' => $staff->id,
             'date' => '2026-06-07',
             'punch_in' => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user)->get("/attendance/detail/{$attendance->id}");
+        $response = $this->actingAs($staff)->get("/attendance/detail/{$attendance->id}");
 
         $response->assertStatus(200);
         $response->assertSee('09:00');
@@ -96,27 +90,25 @@ class AttendanceDetailTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'name' => 'スタッフ一郎',
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
+        $attendance = Attendance::factory()->create([
+            'user_id' => $staff->id,
             'date' => '2026-06-07',
             'punch_in' => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        Rest::create([
+        Rest::factory()->create([
             'attendance_id' => $attendance->id,
             'break_in' => '12:00:00',
             'break_out' => '13:00:00',
         ]);
 
-        $response = $this->actingAs($user)->get("/attendance/detail/{$attendance->id}");
+        $response = $this->actingAs($staff)->get("/attendance/detail/{$attendance->id}");
 
         $response->assertStatus(200);
         $response->assertSee('12:00');

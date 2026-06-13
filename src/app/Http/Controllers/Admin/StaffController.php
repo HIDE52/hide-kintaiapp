@@ -37,11 +37,76 @@ class StaffController extends Controller
 
         $targetCarbon = Carbon::parse($monthParam . '-01');
 
-        $attendances = $staff->attendances()
+        $dbAttendances = $staff->attendances()
             ->whereYear('date', $targetCarbon->year)
             ->whereMonth('date', $targetCarbon->month)
             ->orderBy('date', 'asc')
             ->get();
+
+        foreach ($dbAttendances as $attendance) {
+            $punchIn = Carbon::parse($attendance->punch_in)->startOfMinute();
+
+            if ($attendance->punch_out) {
+                $punchOut = Carbon::parse($attendance->punch_out)->startOfMinute();
+                $stayMinutes = $punchIn->diffInMinutes($punchOut);
+
+                $totalRestMinutes = 0;
+                foreach ($attendance->rests as $rest) {
+                    $breakIn = Carbon::parse($rest->break_in)->startOfMinute();
+                    if ($rest->break_out) {
+                        $breakOut = Carbon::parse($rest->break_out)->startOfMinute();
+                        $totalRestMinutes += $breakIn->diffInMinutes($breakOut);
+                    }
+                }
+
+                $totalWorkingMinutes = $stayMinutes - $totalRestMinutes;
+
+                if ($totalWorkingMinutes > 0) {
+                    $hours = floor($totalWorkingMinutes / 60);
+                    $mins = $totalWorkingMinutes % 60;
+                    $attendance->display_total = sprintf('%02d:%02d', $hours, $mins);
+                } else {
+                    $attendance->display_total = '00:00';
+                }
+
+                $restHours = floor($totalRestMinutes / 60);
+                $restMins = $totalRestMinutes % 60;
+                $attendance->display_rest = sprintf('%02d:%02d', $restHours, $restMins);
+            } else {
+                $attendance->display_total = '';
+                $attendance->display_rest = '';
+            }
+        }
+
+        $daysInMonth = $targetCarbon->daysInMonth;
+        $attendances = [];
+
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $loopDate = $targetCarbon->copy()->day($day);
+            $dateStr = $loopDate->format('Y-m-d');
+
+            $weeks = ['日', '月', '火', '水', '木', '金', '土'];
+            $weekStr = $weeks[$loopDate->dayOfWeek];
+            $displayDate = $loopDate->format('m/d') . '(' . $weekStr . ')';
+
+            $matchedAttendance = $dbAttendances->firstWhere('date', $dateStr);
+
+            if ($matchedAttendance) {
+                $matchedAttendance->display_date = $displayDate;
+                $attendances[] = $matchedAttendance;
+            } else {
+                $emptyAttendance = new \stdClass();
+                $emptyAttendance->id = null;
+                $emptyAttendance->date = $dateStr;
+                $emptyAttendance->display_date = $displayDate;
+                $emptyAttendance->punch_in = null;
+                $emptyAttendance->punch_out = null;
+                $emptyAttendance->display_rest = '';
+                $emptyAttendance->display_total = '';
+
+                $attendances[] = $emptyAttendance;
+            }
+        }
 
         $currentMonth = $targetCarbon->format('Y-m');
         $prevMonth = $targetCarbon->copy()->subMonth()->format('Y-m');
@@ -81,7 +146,7 @@ class StaffController extends Controller
             ->orderBy('date', 'asc')
             ->get();
 
-        $cleanName = str_replace([' ', '　'], '', $staff->name);
+        $cleanName = str_replace([' ', ' '], '', $staff->name);
         $fileName = "{$cleanName}_{$monthParam}_勤怠.csv";
 
         $response = new StreamedResponse(function () use ($attendances) {

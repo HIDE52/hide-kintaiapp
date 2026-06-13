@@ -19,29 +19,26 @@ class AttendanceCorrectionTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'date' => '2026-06-07',
-            'punch_in' => '09:00:00',
+        $attendance = Attendance::factory()->create([
+            'user_id'   => $staff->id,
+            'date'      => '2026-06-07',
+            'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user)->post("/attendance/detail/{$attendance->id}", [
-            'punch_in' => '19:00',
+        $response = $this->actingAs($staff)->post("/attendance/detail/{$attendance->id}", [
+            'punch_in'  => '19:00',
             'punch_out' => '18:00',
-            'remark' => '出勤時間を遅く修正申請します。',
+            'remark'    => '出勤時間を退勤時間より後に設定するエラーテストです。',
         ]);
 
         $response->assertStatus(302);
         $response->assertSessionHasErrors([
-            'punch_out' => '出勤時間もしくは退勤時間が不適切な値です'
+            'punch_out' => '出勤時間もしくは退勤時間が不適切な値です',
         ]);
 
         Carbon::setTestNow();
@@ -51,32 +48,32 @@ class AttendanceCorrectionTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'date' => '2026-06-07',
-            'punch_in' => '09:00:00',
+        $attendance = Attendance::factory()->create([
+            'user_id'   => $staff->id,
+            'date'      => '2026-06-07',
+            'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user)->post("/attendance/detail/{$attendance->id}", [
-            'punch_in' => '09:00',
+        $response = $this->actingAs($staff)->post("/attendance/detail/{$attendance->id}", [
+            'punch_in'  => '09:00',
             'punch_out' => '18:00',
-            'rest_id' => [
-                0 => ['break_in' => '19:00', 'break_out' => '19:30']
+            'rest_id'   => [
+                0 => [
+                    'break_in'  => '19:00',
+                    'break_out' => '19:30',
+                ],
             ],
-            'remark' => '休憩時間の修正申請です。',
+            'remark'    => '休憩開始を退勤後に設定するエラーテストです。',
         ]);
 
         $response->assertStatus(302);
         $response->assertSessionHasErrors([
-            'rest_id.0.break_in' => '休憩時間が不適切な値です'
+            'rest_id.0.break_in' => '休憩時間が不適切な値です',
         ]);
 
         Carbon::setTestNow();
@@ -86,32 +83,32 @@ class AttendanceCorrectionTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'date' => '2026-06-07',
-            'punch_in' => '09:00:00',
+        $attendance = Attendance::factory()->create([
+            'user_id'   => $staff->id,
+            'date'      => '2026-06-07',
+            'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user)->post("/attendance/detail/{$attendance->id}", [
-            'punch_in' => '09:00',
+        $response = $this->actingAs($staff)->post("/attendance/detail/{$attendance->id}", [
+            'punch_in'  => '09:00',
             'punch_out' => '18:00',
-            'rest_id' => [
-                0 => ['break_in' => '12:00', 'break_out' => '19:00']
+            'rest_id'   => [
+                0 => [
+                    'break_in'  => '12:00',
+                    'break_out' => '19:00',
+                ],
             ],
-            'remark' => '休憩終了時間を退勤後に設定。',
+            'remark'    => '休憩終了を退勤後に設定するエラーテストです。',
         ]);
 
         $response->assertStatus(302);
         $response->assertSessionHasErrors([
-            'rest_id.0.break_out' => '休憩時間もしくは退勤時間が不適切な値です'
+            'rest_id.0.break_out' => '休憩時間もしくは退勤時間が不適切な値です',
         ]);
 
         Carbon::setTestNow();
@@ -121,29 +118,26 @@ class AttendanceCorrectionTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'date' => '2026-06-07',
-            'punch_in' => '09:00:00',
+        $attendance = Attendance::factory()->create([
+            'user_id'   => $staff->id,
+            'date'      => '2026-06-07',
+            'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user)->post("/attendance/detail/{$attendance->id}", [
-            'punch_in' => '09:00',
+        $response = $this->actingAs($staff)->post("/attendance/detail/{$attendance->id}", [
+            'punch_in'  => '09:00',
             'punch_out' => '18:00',
-            'remark' => '',
+            'remark'    => '',
         ]);
 
         $response->assertStatus(302);
         $response->assertSessionHasErrors([
-            'remark' => '備考を記入してください'
+            'remark' => '備考を記入してください',
         ]);
 
         Carbon::setTestNow();
@@ -153,39 +147,39 @@ class AttendanceCorrectionTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'date' => '2026-06-07',
-            'punch_in' => '09:00:00',
+        $attendance = Attendance::factory()->create([
+            'user_id'   => $staff->id,
+            'date'      => '2026-06-07',
+            'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user)->post("/attendance/detail/{$attendance->id}", [
-            'punch_in' => '09:15',
+        $response = $this->actingAs($staff)->post("/attendance/detail/{$attendance->id}", [
+            'punch_in'  => '09:15',
             'punch_out' => '18:15',
-            'rest_id' => [
-                0 => ['break_in' => '12:00', 'break_out' => '13:00']
+            'rest_id'   => [
+                0 => [
+                    'break_in'  => '12:00',
+                    'break_out' => '13:00',
+                ],
             ],
-            'remark' => '正当な修正理由をここに記述します。',
+            'remark'    => '遅刻したため、正しい出勤時間に修正申請を提出いたします。',
         ]);
 
         $response->assertStatus(302);
         $response->assertSessionHas('session_success', '修正申請を提出しました。');
 
         $this->assertDatabaseHas('correction_attendances', [
-            'attendance_id' => $attendance->id,
-            'user_id' => $user->id,
-            'requested_punch_in' => '09:15:00',
+            'attendance_id'       => $attendance->id,
+            'user_id'             => $staff->id,
+            'requested_punch_in'  => '09:15:00',
             'requested_punch_out' => '18:15:00',
-            'status' => 0,
-            'remark' => '正当な修正理由をここに記述します。'
+            'status'              => 0,
+            'remark'              => '遅刻したため、正しい出勤時間に修正申請を提出いたします。',
         ]);
 
         Carbon::setTestNow();
@@ -195,33 +189,30 @@ class AttendanceCorrectionTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'date' => '2026-06-07',
-            'punch_in' => '09:00:00',
+        $attendance = Attendance::factory()->create([
+            'user_id'   => $staff->id,
+            'date'      => '2026-06-07',
+            'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
         CorrectionAttendance::create([
-            'attendance_id' => $attendance->id,
-            'user_id' => $user->id,
-            'requested_punch_in' => '09:30:00',
+            'attendance_id'       => $attendance->id,
+            'user_id'             => $staff->id,
+            'requested_punch_in'  => '09:30:00',
             'requested_punch_out' => '18:30:00',
-            'status' => 0,
-            'remark' => '承認待ち表示テスト用の備考データ',
+            'status'              => 0,
+            'remark'              => '承認待ち表示テスト用の固有メッセージです',
         ]);
 
-        $response = $this->actingAs($user)->get('/stamp_correction_request/list?tab=waiting');
+        $response = $this->actingAs($staff)->get('/stamp_correction_request/list?tab=waiting');
 
         $response->assertStatus(200);
-        $response->assertSee('承認待ち表示テスト用の備考データ');
+        $response->assertSee('承認待ち表示テスト用の固有メッセージです');
 
         Carbon::setTestNow();
     }
@@ -230,33 +221,30 @@ class AttendanceCorrectionTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'date' => '2026-06-07',
-            'punch_in' => '09:00:00',
+        $attendance = Attendance::factory()->create([
+            'user_id'   => $staff->id,
+            'date'      => '2026-06-07',
+            'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
         CorrectionAttendance::create([
-            'attendance_id' => $attendance->id,
-            'user_id' => $user->id,
-            'requested_punch_in' => '09:45:00',
+            'attendance_id'       => $attendance->id,
+            'user_id'             => $staff->id,
+            'requested_punch_in'  => '09:45:00',
             'requested_punch_out' => '18:45:00',
-            'status' => 1,
-            'remark' => '承認済み表示テスト用の備考データ',
+            'status'              => 1,
+            'remark'              => '承認済み表示テスト用の固有メッセージです',
         ]);
 
-        $response = $this->actingAs($user)->get('/stamp_correction_request/list?tab=approved');
+        $response = $this->actingAs($staff)->get('/stamp_correction_request/list?tab=approved');
 
         $response->assertStatus(200);
-        $response->assertSee('承認済み表示テスト用の備考データ');
+        $response->assertSee('承認済み表示テスト用の固有メッセージです');
 
         Carbon::setTestNow();
     }
@@ -265,21 +253,18 @@ class AttendanceCorrectionTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $user = User::create([
-            'name' => 'テスト太郎',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-            'role' => 2
+        $staff = User::factory()->create([
+            'role' => 2,
         ]);
 
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'date' => '2026-06-07',
-            'punch_in' => '09:00:00',
+        $attendance = Attendance::factory()->create([
+            'user_id'   => $staff->id,
+            'date'      => '2026-06-07',
+            'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user)->get("/attendance/detail/{$attendance->id}");
+        $response = $this->actingAs($staff)->get("/attendance/detail/{$attendance->id}");
 
         $response->assertStatus(200);
         $response->assertSee('勤怠詳細');

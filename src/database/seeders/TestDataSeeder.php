@@ -22,6 +22,8 @@ class TestDataSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
         ]);
 
+        $startDate = Carbon::now()->subMonth()->startOfMonth();
+
         $userA = User::create([
             'name' => '佐藤 隆',
             'email' => 'userA@example.com',
@@ -30,9 +32,7 @@ class TestDataSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
         ]);
 
-        $startDate = Carbon::now()->subMonth()->startOfMonth();
-
-        for ($date = $startDate->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
+        for ($date = $startDate->copy(); $date->isPast() && !$date->isToday(); $date->addDay()) {
             if ($date->isSaturday() || $date->isSunday()) {
                 continue;
             }
@@ -59,26 +59,26 @@ class TestDataSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
         ]);
 
-        for ($date = $startDate->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
-            if ($date->dayOfWeek === 3) {
-                continue;
-            }
-
+        for ($date = $startDate->copy(); $date->isPast() && !$date->isToday(); $date->addDay()) {
             if ($date->isYesterday()) {
                 $userB->attendances()->create([
                     'date' => $date->format('Y-m-d'),
                     'punch_in' => '20:00:00',
                     'punch_out' => null,
                 ]);
-            } elseif ($date->isToday()) {
-            } else {
-                $attendanceB = $userB->attendances()->create([
-                    'date' => $date->format('Y-m-d'),
-                    'punch_in' => '10:00:00',
-                    'punch_out' => '19:00:00',
-                ]);
-                $attendanceB->rests()->create(['break_in' => '13:00:00', 'break_out' => '14:00:00']);
+                continue;
             }
+
+            if ($date->isSunday() || $date->dayOfWeek === 3) {
+                continue;
+            }
+
+            $attendanceB = $userB->attendances()->create([
+                'date' => $date->format('Y-m-d'),
+                'punch_in' => '10:00:00',
+                'punch_out' => '19:00:00',
+            ]);
+            $attendanceB->rests()->create(['break_in' => '13:00:00', 'break_out' => '14:00:00']);
         }
 
         $userC = User::create([
@@ -89,7 +89,7 @@ class TestDataSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
         ]);
 
-        for ($date = $startDate->copy(); $date->isPast() || $date->isToday(); $date->addDay()) {
+        for ($date = $startDate->copy(); $date->isPast() && !$date->isToday(); $date->addDay()) {
             if ($date->isSaturday() || $date->isSunday() || $date->day == 20) {
                 continue;
             }
@@ -102,18 +102,17 @@ class TestDataSeeder extends Seeder
                 ]);
                 $attendanceC->rests()->create(['break_in' => '12:00:00', 'break_out' => '13:00:00']);
 
-                $attendanceC->correctionAttendances()->create([
+                $correction = $attendanceC->correctionAttendances()->create([
                     'user_id' => $userC->id,
                     'requested_punch_in' => '08:30:00',
                     'requested_punch_out' => '18:00:00',
                     'status' => 0,
                     'remark' => '電車の遅延により打刻が遅れました。手続きをお願いします。',
                 ]);
-            } elseif ($date->isToday()) {
-                $userC->attendances()->create([
-                    'date' => $date->format('Y-m-d'),
-                    'punch_in' => '09:00:00',
-                    'punch_out' => null,
+
+                $correction->correctionRests()->create([
+                    'requested_break_in' => '12:00:00',
+                    'requested_break_out' => '13:00:00',
                 ]);
             } else {
                 $attendanceC = $userC->attendances()->create([

@@ -16,9 +16,9 @@
 
             <form action="{{ route('attendance.list') }}" method="GET" class="attendance-list__month-form" id="monthForm">
                 <div class="attendance-list__input-container">
-                    <input type="month" name="month" id="month-picker" value="{{ \Carbon\Carbon::parse($currentMonth)->format('Y-m') }}" onchange="document.getElementById('monthForm').submit();" class="attendance-list__month-input">
+                    <input type="month" name="month" id="month-picker" value="{{ $currentMonth }}" onchange="document.getElementById('monthForm').submit();" class="attendance-list__month-input">
                     <span class="attendance-list__current-month-text">
-                        {{ \Carbon\Carbon::parse($currentMonth)->format('Y/m') }}
+                        {{ $displayMonth }}
                     </span>
                 </div>
             </form>

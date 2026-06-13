@@ -12,53 +12,67 @@ class AttendanceListTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_see_only_own_attendance_records()
+    public function test_own_records_are_visible_when_staff_accesses_attendance_list_page()
     {
-        $me = User::factory()->create();
-        $other = User::factory()->create();
+        Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
 
-        $this->actingAs($me);
+        $staff = User::factory()->create([
+            'role' => 2,
+        ]);
+
+        $staff2 = User::factory()->create([
+            'role' => 2,
+        ]);
 
         Attendance::create([
-            'user_id'   => $me->id,
+            'user_id'   => $staff->id,
             'date'      => '2026-06-01',
             'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
         Attendance::create([
-            'user_id'   => $other->id,
+            'user_id'   => $staff2->id,
             'date'      => '2026-06-02',
             'punch_in'  => '10:30:00',
             'punch_out' => '19:30:00',
         ]);
 
-        $response = $this->get('/attendance/list');
+        $response = $this->actingAs($staff)->get('/attendance/list');
 
         $response->assertStatus(200);
         $response->assertSee('09:00');
+        $response->assertSee('18:00');
         $response->assertDontSee('10:30');
+
+        Carbon::setTestNow();
     }
 
-    public function test_attendance_list_shows_current_month_by_default()
+    public function test_current_month_is_displayed_when_staff_access_list_page_without_parameter()
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
-        $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get('/attendance/list');
+        $staff = User::factory()->create([
+            'role' => 2,
+        ]);
 
+        $response = $this->actingAs($staff)->get('/attendance/list');
+
+        $response->assertStatus(200);
         $response->assertSee('2026/06');
 
         Carbon::setTestNow();
     }
 
-    public function test_user_can_navigate_to_previous_month()
+    public function test_display_changes_to_previous_month_when_user_clicks_previous_month_button()
     {
         Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
-        $user = User::factory()->create();
-        $this->actingAs($user);
 
-        $response = $this->get('/attendance/list?month=2026-06');
+        $staff = User::factory()->create([
+            'role' => 2,
+        ]);
+
+        $response = $this->actingAs($staff)->get('/attendance/list?month=2026-06');
         $response->assertSee('?month=2026-05');
 
         $prevResponse = $this->get('/attendance/list?month=2026-05');
@@ -67,13 +81,15 @@ class AttendanceListTest extends TestCase
         Carbon::setTestNow();
     }
 
-    public function test_user_can_navigate_to_next_month()
+    public function test_display_changes_to_next_month_when_user_clicks_next_month_button()
     {
-        Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        Carbon::setTestNow(Carbon::create(2026, 6, 15, 10, 0, 0));
 
-        $response = $this->get('/attendance/list?month=2026-05');
+        $staff = User::factory()->create([
+            'role' => 2,
+        ]);
+
+        $response = $this->actingAs($staff)->get('/attendance/list?month=2026-05');
         $response->assertSee('?month=2026-06');
 
         $nextResponse = $this->get('/attendance/list?month=2026-06');
@@ -82,22 +98,29 @@ class AttendanceListTest extends TestCase
         Carbon::setTestNow();
     }
 
-    public function test_user_can_transition_to_attendance_detail_page()
+    public function test_detail_page_opens_correctly_when_user_clicks_detail_button()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        Carbon::setTestNow(Carbon::create(2026, 6, 7, 10, 0, 0));
+
+        $staff = User::factory()->create([
+            'role' => 2,
+        ]);
 
         $attendance = Attendance::create([
-            'user_id'   => $user->id,
+            'user_id'   => $staff->id,
             'date'      => '2026-06-01',
             'punch_in'  => '09:00:00',
             'punch_out' => '18:00:00',
         ]);
 
-        $response = $this->get('/attendance/list');
-        $response->assertSee('/attendance/detail/' . $attendance->id);
+        $response = $this->actingAs($staff)->get('/attendance/list');
 
-        $detailResponse = $this->get('/attendance/detail/' . $attendance->id);
+        $expectedDetailUrl = '/attendance/detail/' . $attendance->id;
+        $response->assertSee($expectedDetailUrl);
+
+        $detailResponse = $this->get($expectedDetailUrl);
         $detailResponse->assertStatus(200);
+
+        Carbon::setTestNow();
     }
 }

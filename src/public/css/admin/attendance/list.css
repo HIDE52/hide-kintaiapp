@@ -1,18 +1,12 @@
 @charset "UTF-8";
 
-body {
-    background-color: #f7f7f7;
-    margin: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-}
-
-.admin-attendance {
-    max-width: 800px;
+.admin-attendance-list {
+    max-width: 850px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-.admin-attendance__alert-success {
+.admin-attendance-list__alert-success {
     color: #52c41a;
     background-color: #f6ffed;
     border: 1px solid #b7eb8f;
@@ -24,27 +18,17 @@ body {
     text-align: left;
 }
 
-.admin-attendance__title {
-    text-align: left;
+.admin-attendance-list__title {
     font-size: 24px;
-    color: #333333;
-    margin-bottom: 30px;
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    margin-bottom: 30px;
+    color: #333333;
+    border-left: 4px solid #000000;
+    padding-left: 12px;
+    line-height: 1;
 }
 
-.admin-attendance__title::before {
-    content: "";
-    display: inline-block;
-    width: 4px;
-    height: 28px;
-    background-color: #000000;
-    border-radius: 2px;
-}
-
-.admin-attendance__nav {
+.admin-attendance-list__nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,10 +36,9 @@ body {
     background-color: #ffffff;
     padding: 12px 24px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
-.admin-attendance__nav-btn {
+.admin-attendance-list__nav-btn {
     color: #888888;
     text-decoration: none;
     font-size: 16px;
@@ -66,17 +49,21 @@ body {
     transition: color 0.2s;
 }
 
-.admin-attendance__nav-btn:hover {
+.admin-attendance-list__nav-btn:hover {
     color: #333333;
 }
 
-.admin-attendance__input-container {
+.admin-attendance-list__date-form {
+    margin: 0;
+}
+
+.admin-attendance-list__input-container {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.admin-attendance__date-input {
+.admin-attendance-list__date-input {
     border: none;
     background: transparent;
     outline: none;
@@ -87,63 +74,79 @@ body {
     overflow: hidden;
 }
 
-.admin-attendance__current-date-text {
+.admin-attendance-list__current-date-text {
     font-size: 20px;
     font-weight: bold;
     color: #333333;
     user-select: none;
 }
 
-.admin-table {
+.admin-attendance-list-table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 12px;
+    border-spacing: 0 5px;
 }
 
-.admin-table__th {
-    font-size: 14px;
-    color: #888888;
-    text-align: left;
-    padding: 0 24px;
-    font-weight: normal;
-}
-
-.admin-table__tr {
-    background-color: #ffffff;
-}
-
-.admin-table__td {
-    padding: 20px 24px;
+.admin-attendance-list-table__th {
     font-size: 16px;
-    color: #333333;
+    color: #666666;
+    font-weight: bold;
+    padding: 20px 24px;
     border-top: 1px solid #e8e8e8;
     border-bottom: 1px solid #e8e8e8;
-    vertical-align: middle;
+    text-align: left;
 }
 
-.admin-table__td--name {
-    font-weight: 500;
-}
-
-.admin-table__td:first-child {
+.admin-attendance-list-table__th:first-child {
     border-left: 1px solid #e8e8e8;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
+    padding-left: 40px;
 }
 
-.admin-table__td:last-child {
+.admin-attendance-list-table__th:last-child {
     border-right: 1px solid #e8e8e8;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-.admin-table__detail-btn {
-    color: #4b4b4b;
+.admin-attendance-list-table__tr {
+    background-color: #ffffff;
+}
+
+.admin-attendance-list-table__td {
+    padding: 20px 24px;
+    font-size: 16px;
+    color: #666666;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.admin-attendance-list-table__td--name {
+    color: #666666;
+    font-weight: bold;
+}
+
+.admin-attendance-list-table__td:first-child {
+    border-left: 1px solid #e8e8e8;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding-left: 40px;
+}
+
+.admin-attendance-list-table__td:last-child {
+    border-right: 1px solid #e8e8e8;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.admin-attendance-list-table__detail-btn {
+    color: #333333;
     text-decoration: none;
     font-weight: bold;
 }
 
-.admin-table__detail-btn:hover {
+.admin-attendance-list-table__detail-btn:hover {
     text-decoration: underline;
     color: #000000;
 }

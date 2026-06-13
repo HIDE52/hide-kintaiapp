@@ -154,101 +154,80 @@ class AttendanceController extends Controller
 
     public function list(Request $request)
     {
-        $monthParam = $request->input('month', Carbon::now()->format('Y-m'));
+        $user = Auth::user();
         $currentMonthStr = Carbon::now()->format('Y-m');
+        $monthParam = $request->query('month', $currentMonthStr);
+
+        if (!preg_match('/^[0-9]{4}-[0-9]{2}$/', $monthParam)) {
+            abort(404);
+        }
 
         if ($monthParam > $currentMonthStr) {
             abort(403, '未来の月は表示できません。');
         }
 
         $targetCarbon = Carbon::parse($monthParam . '-01');
-        $currentMonth = $targetCarbon->format('Y-m');
-        $prevMonth = $targetCarbon->copy()->subMonth()->format('Y-m');
-        $nextMonth = $targetCarbon->copy()->addMonth()->format('Y-m');
 
-        $showNextButton = $nextMonth <= $currentMonthStr;
-
-        // 1. データベースから当月のデータを一括取得（日付をキーにした連想配列にする）
-        $dbAttendances = Attendance::with('rests')
-            ->where('user_id', Auth::id())
+        $dbAttendances = $user->attendances()
             ->whereYear('date', $targetCarbon->year)
             ->whereMonth('date', $targetCarbon->month)
-            ->get()
-            ->keyBy('date'); // '2026-05-01' のような日付文字列をキーにする
+            ->orderBy('date', 'asc')
+            ->get();
 
-        // 2. その月の「1日」から「末日」までの全日付のカードを格納する配列を用意
-        $allDaysAttendances = [];
-        $daysInMonth = $targetCarbon->daysInMonth; // その月が何日あるか（30日か31日か）
-
-        for ($day = 1; $day <= $daysInMonth; $day++) {
-            // ループ中の具体的な日付を作成（例：2026-05-01）
-            $dateStr = $targetCarbon->copy()->day($day)->format('Y-m-d');
-
-            // 曜日付きの表示用日付を作成（例：05/01(金)）
-            $displayDate = $targetCarbon->copy()->day($day)->isoFormat('MM/DD(ddd)');
-
-            // 3. データベースにその日のデータがあるかチェック
-            if ($dbAttendances->has($dateStr)) {
-                // データがある場合は、既存のデータを使う
-                $attendance = $dbAttendances->get($dateStr);
-
-                // --- ここから時間の計算ロジック（元のコードをそのまま流用） ---
-                $punchIn = Carbon::parse($attendance->punch_in)->startOfMinute();
-                if ($attendance->punch_out) {
-                    $punchOut = Carbon::parse($attendance->punch_out)->startOfMinute();
-                    $stayMinutes = $punchIn->diffInMinutes($punchOut);
-                } else {
-                    $stayMinutes = 0;
-                }
-
-                $totalRestMinutes = 0;
-                foreach ($attendance->rests as $rest) {
-                    $breakIn = Carbon::parse($rest->break_in)->startOfMinute();
-                    if ($rest->break_out) {
-                        $breakOut = Carbon::parse($rest->break_out)->startOfMinute();
-                        $totalRestMinutes += $breakIn->diffInMinutes($breakOut);
-                    }
-                }
-
-                $totalWorkingMinutes = $stayMinutes - $totalRestMinutes;
-
-                if ($totalWorkingMinutes > 0) {
-                    $hours = floor($totalWorkingMinutes / 60);
-                    $mins = $totalWorkingMinutes % 60;
-                    $attendance->display_total = sprintf('%02d:%02d', $hours, $mins);
-                } else {
-                    $attendance->display_total = '00:00';
-                }
-
-                $restHours = floor($totalRestMinutes / 60);
-                $restMins = $totalRestMinutes % 60;
-                $attendance->display_rest = sprintf('%02d:%02d', $restHours, $restMins);
-                // --- ここまで時間の計算ロジック ---
-
-                // 表示用の日付をセット
-                $attendance->display_date = $displayDate;
-                $allDaysAttendances[] = $attendance;
+        foreach ($dbAttendances as $attendance) {
+            if ($attendance->punch_out) {
+                $attendance->display_rest = $attendance->total_rest_time;
+                $attendance->display_total = $attendance->total_work_time;
             } else {
-                // 4. データがない日（土日や未打刻日）は、空白のダミーオブジェクトを作る
-                $allDaysAttendances[] = (object)[
-                    'id'            => null, // 詳細画面へ遷移させない、または制御するため
-                    'display_date'  => $displayDate,
-                    'punch_in'      => null,
-                    'punch_out'     => null,
-                    'display_rest'  => '', // ✨ 空文字（''）に変更して00:00を消します
-                    'display_total' => '', // ✨ 空文字（''）に変更して00:00を消します
-                ];
+                $attendance->display_rest = '';
+                $attendance->display_total = '';
             }
         }
 
-        // 最後に、全日付が詰まった配列をビューに渡す
-        return view('attendance.list', [
-            'attendances'     => $allDaysAttendances,
-            'currentMonth'    => $currentMonth,
-            'prevMonth'       => $prevMonth,
-            'nextMonth'       => $nextMonth,
-            'showNextButton'  => $showNextButton
-        ]);
+        $daysInMonth = $targetCarbon->daysInMonth;
+        $attendances = [];
+
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $loopDate = $targetCarbon->copy()->day($day);
+            $dateStr = $loopDate->format('Y-m-d');
+
+            $weeks = ['日', '月', '火', '水', '木', '金', '土'];
+            $weekStr = $weeks[$loopDate->dayOfWeek];
+            $displayDate = $loopDate->format('m/d') . '(' . $weekStr . ')';
+
+            $matchedAttendance = $dbAttendances->firstWhere('date', $dateStr);
+
+            if ($matchedAttendance) {
+                $matchedAttendance->display_date = $displayDate;
+                $attendances[] = $matchedAttendance;
+            } else {
+                $emptyAttendance = new \stdClass();
+                $emptyAttendance->id = null;
+                $emptyAttendance->date = $dateStr;
+                $emptyAttendance->display_date = $displayDate;
+                $emptyAttendance->punch_in = null;
+                $emptyAttendance->punch_out = null;
+                $emptyAttendance->display_rest = '';
+                $emptyAttendance->display_total = '';
+
+                $attendances[] = $emptyAttendance;
+            }
+        }
+
+        $currentMonth = $targetCarbon->format('Y-m');
+        $prevMonth = $targetCarbon->copy()->subMonth()->format('Y-m');
+        $nextMonth = $targetCarbon->copy()->addMonth()->format('Y-m');
+        $showNextButton = ($nextMonth > $currentMonthStr) ? false : true;
+        $displayMonth = $targetCarbon->format('Y/m');
+
+        return view('attendance.list', compact(
+            'attendances',
+            'currentMonth',
+            'prevMonth',
+            'nextMonth',
+            'showNextButton',
+            'displayMonth'
+        ));
     }
 
     public function show($id)
