@@ -12,6 +12,15 @@
         <h1 class="attendance-stamp__time">{{ $currentTime ?? '08:00' }}</h1>
     </div>
 
+    @if($hasForgotEndStamp)
+        <div class="attendance-stamp__alert-forgot">
+            前日の退勤打刻がされていません。<br>
+            <a href="{{ route('attendance.detail', ['id' => $yesterdayId]) }}" class="attendance-stamp__alert-link">
+                勤怠詳細画面から修正申請を行ってください。
+            </a>
+        </div>
+    @endif
+
     @if(session('success') && ($status ?? '勤務外') !== '退勤済')
         <div class="attendance-stamp__alert">
             {{ session('success') }}
@@ -22,7 +31,7 @@
         @if(($status ?? '勤務外') === '勤務外')
             <form action="/attendance/start" method="POST" class="attendance-stamp__form" novalidate>
                 @csrf
-                <button type="submit" class="attendance-stamp__btn attendance-stamp__btn--black">出勤</button>
+                <button type="submit" class="attendance-stamp__btn attendance-stamp__btn--black" {{ $hasForgotEndStamp ? 'disabled' : '' }}>出勤</button>
             </form>
 
         @elseif(($status ?? '勤務外') === '出勤中')

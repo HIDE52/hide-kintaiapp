@@ -23,9 +23,12 @@ class AttendanceController extends Controller
             ->whereNull('punch_out')
             ->first();
 
+        $hasForgotEndStamp = false;
+        $yesterdayId = null;
+
         if ($unfinishedAttendance) {
-            return redirect()->route('attendance.detail', ['id' => $unfinishedAttendance->id])
-                ->with('error_message', '前日の退勤打刻がされていません。勤怠詳細画面から修正申請を行ってください。');
+            $hasForgotEndStamp = true;
+            $yesterdayId = $unfinishedAttendance->id;
         }
 
         $attendance = Attendance::where('user_id', $user->id)
@@ -52,13 +55,28 @@ class AttendanceController extends Controller
             }
         }
 
-        return view('attendance.index', compact('currentDate', 'currentTime', 'status'));
+        return view('attendance.index', compact(
+            'currentDate',
+            'currentTime',
+            'status',
+            'hasForgotEndStamp',
+            'yesterdayId'
+        ));
     }
 
     public function start()
     {
         $user = Auth::user();
         $today = Carbon::today()->format('Y-m-d');
+
+        $unfinishedAttendance = Attendance::where('user_id', $user->id)
+            ->where('date', '<', $today)
+            ->whereNull('punch_out')
+            ->exists();
+
+        if ($unfinishedAttendance) {
+            return redirect()->back();
+        }
 
         $exists = Attendance::where('user_id', $user->id)
             ->where('date', $today)

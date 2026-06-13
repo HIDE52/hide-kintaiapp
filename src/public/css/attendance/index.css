@@ -47,6 +47,42 @@
     line-height: 1.0;
 }
 
+.attendance-stamp__alert-forgot {
+    background-color: #fff5f5;
+    border: 1px solid #ffa8a8;
+    color: #e03131;
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    line-height: 1.6;
+}
+
+.attendance-stamp__alert-link {
+    display: inline-block;
+    color: #1c7ed6;
+    text-decoration: underline;
+    margin-top: 4px;
+    transition: color 0.2s ease;
+}
+
+.attendance-stamp__alert-link:hover {
+    color: #1150a6;
+}
+
+.attendance-stamp__btn:disabled {
+    background-color: #cccccc !important;
+    color: #ffffff !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 .attendance-stamp__alert {
     color: #ff0000;
     font-weight: bold;
