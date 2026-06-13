@@ -35,27 +35,35 @@
 .admin-staff-list__th,
 .admin-staff-list__td {
     vertical-align: middle;
-    padding: 16px 20px;
+    padding: 22px 20px;
     white-space: nowrap;
+    border-top: 1px solid #eaeeef;
+    border-bottom: 1px solid #eaeeef;
 }
 
 .admin-staff-list__th {
     font-size: 14px;
     color: #888888;
     font-weight: normal;
-    border-top: 1px solid #eaeeef;
-    border-bottom: 1px solid #eaeeef;
-    padding-top: 22px;
-    padding-bottom: 22px;
 }
 
 .admin-staff-list__td {
     font-size: 16px;
     color: #333333;
-    border-top: 1px solid #eaeeef;
-    border-bottom: 1px solid #eaeeef;
-    padding-top: 22px;
-    padding-bottom: 22px;
+}
+
+.admin-staff-list__th:first-child,
+.admin-staff-list__td:first-child {
+    border-left: 1px solid #eaeeef;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.admin-staff-list__th:last-child,
+.admin-staff-list__td:last-child {
+    border-right: 1px solid #eaeeef;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .admin-staff-list__th--name,
@@ -96,20 +104,6 @@
 .admin-staff-list__tr-head,
 .admin-staff-list__tr {
     background-color: #ffffff;
-}
-
-.admin-staff-list__th:first-child,
-.admin-staff-list__td:first-child {
-    border-left: 1px solid #eaeeef;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-
-.admin-staff-list__th:last-child,
-.admin-staff-list__td:last-child {
-    border-right: 1px solid #eaeeef;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
 }
 
 .admin-staff-list__detail-btn {

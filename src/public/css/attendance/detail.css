@@ -1,11 +1,5 @@
 @charset "UTF-8";
 
-body {
-    background-color: #f7f7f7;
-    margin: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-}
-
 .attendance-detail {
     max-width: 850px;
     margin: 40px auto;
@@ -63,20 +57,18 @@ body {
     border-right: 1px solid #e8e8e8;
 }
 
-.attendance-detail-table__tr:first-of-type .attendance-detail-table__td:nth-child(1) {
-    border-top-left-radius: 10px;
-}
-
+.attendance-detail-table__tr:first-of-type .attendance-detail-table__td:nth-child(1),
 .attendance-detail-table__tr:first-of-type .attendance-detail-table__td:nth-child(3) {
+    border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 
-.attendance-detail-table__tr:last-of-type .attendance-detail-table__td:nth-child(1) {
-    border-bottom-left-radius: 10px;
-}
-
-.attendance-detail-table__tr:last-of-type .attendance-detail-table__td:nth-child(3) {
-    border-bottom-right-radius: 10px;
+.attendance-detail-table__tr:last-of-type .attendance-detail-table__td:nth-child(1),
+.attendance-detail-table__tr:last-of-type .attendance-detail-table__td:nth-child(3),
+.attendance-detail-table__tr--last .attendance-detail-table__td:nth-child(1),
+.attendance-detail-table__tr--last .attendance-detail-table__td:nth-child(3) {
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
 }
 
 .attendance-detail-table__label--valign-top {
@@ -138,18 +130,15 @@ body {
     padding-left: 0.25em;
 }
 
-.attendance-detail__input-time[readonly]{
-    background: transparent;
+.attendance-detail__input-time[readonly],
+.attendance-detail__textarea[readonly] {
+    background-color: transparent;
     border: none;
     color: #333333;
     cursor: default;
 }
 
 .attendance-detail__textarea[readonly] {
-background-color: transparent;
-    border: none;
-    color: #333333;
-    cursor: default;
     height: auto;
     min-height: 60px;
     padding: 0 16px;
@@ -219,12 +208,4 @@ background-color: transparent;
     text-align: right;
     margin-top: 16px;
     padding-right: 24px;
-}
-
-.attendance-detail-table__tr--last .attendance-detail-table__td:nth-child(1) {
-    border-bottom-left-radius: 10px !important;
-}
-
-.attendance-detail-table__tr--last .attendance-detail-table__td:nth-child(3) {
-    border-bottom-right-radius: 10px !important;
 }

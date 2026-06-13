@@ -75,24 +75,30 @@
     border-spacing: 0 5px;
 }
 
-.attendance-list-table__th {
+.attendance-list-table__th,
+.attendance-list-table__td {
+    padding: 20px 24px;
     font-size: 16px;
     color: #666666;
-    font-weight: bold;
-    padding: 20px 24px;
     border-top: 1px solid #e8e8e8;
     border-bottom: 1px solid #e8e8e8;
+}
+
+.attendance-list-table__th {
+    font-weight: bold;
     text-align: left;
 }
 
-.attendance-list-table__th:first-child {
+.attendance-list-table__th:first-child,
+.attendance-list-table__td:first-child {
     border-left: 1px solid #e8e8e8;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     padding-left: 40px;
 }
 
-.attendance-list-table__th:last-child {
+.attendance-list-table__th:last-child,
+.attendance-list-table__td:last-child {
     border-right: 1px solid #e8e8e8;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -102,30 +108,8 @@
     background-color: #ffffff;
 }
 
-.attendance-list-table__td {
-    padding: 20px 24px;
-    font-size: 16px;
-    color: #666666;
-    border-top: 1px solid #e8e8e8;
-    border-bottom: 1px solid #e8e8e8;
-}
-
 .attendance-list-table__td--date {
-    color: #666666;
     font-weight: bold;
-}
-
-.attendance-list-table__td:first-child {
-    border-left: 1px solid #e8e8e8;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    padding-left: 40px;
-}
-
-.attendance-list-table__td:last-child {
-    border-right: 1px solid #e8e8e8;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
 }
 
 .attendance-list-table__detail-btn {

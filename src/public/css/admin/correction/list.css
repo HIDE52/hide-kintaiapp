@@ -58,24 +58,30 @@
     background-color: #ffffff;
 }
 
-.admin-correction-list__thead-tr .admin-correction-list__th {
+.admin-correction-list__th,
+.admin-correction-list__td {
     padding: 20px 24px;
     font-size: 16px;
     color: #666666;
-    font-weight: bold;
     border-top: 1px solid #e8e8e8;
     border-bottom: 1px solid #e8e8e8;
-    text-align: left;
     box-sizing: border-box;
 }
 
-.admin-correction-list__thead-tr .admin-correction-list__th:first-child {
+.admin-correction-list__th {
+    font-weight: bold;
+    text-align: left;
+}
+
+.admin-correction-list__th:first-child,
+.admin-correction-list__td:first-child {
     border-left: 1px solid #e8e8e8;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
 
-.admin-correction-list__thead-tr .admin-correction-list__th:last-child {
+.admin-correction-list__th:last-child,
+.admin-correction-list__td:last-child {
     border-right: 1px solid #e8e8e8;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -83,7 +89,6 @@
 
 .admin-correction-list__th--status {
     width: 14%;
-    text-align: center !important;
 }
 
 .admin-correction-list__th--name {
@@ -104,7 +109,6 @@
 
 .admin-correction-list__th--detail {
     width: 12%;
-    text-align: center !important;
 }
 
 .admin-correction-list__tr {
@@ -112,16 +116,10 @@
 }
 
 .admin-correction-list__td {
-    padding: 20px 24px;
-    font-size: 16px;
-    color: #666666;
-    border-top: 1px solid #e8e8e8;
-    border-bottom: 1px solid #e8e8e8;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    box-sizing: border-box;
 }
 
 .admin-correction-list__th--status,
@@ -149,18 +147,6 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2 !important;
     overflow: hidden !important;
-}
-
-.admin-correction-list__td:first-child {
-    border-left: 1px solid #e8e8e8;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-
-.admin-correction-list__td:last-child {
-    border-right: 1px solid #e8e8e8;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
 }
 
 .admin-correction-list__td--empty {
